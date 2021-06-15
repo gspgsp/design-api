@@ -1,4 +1,3 @@
 .idea/
 vendor/
-Gopkg.lock
 config/config.yaml
