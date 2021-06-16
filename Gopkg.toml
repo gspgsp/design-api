@@ -24,7 +24,10 @@
 #   go-tests = true
 #   unused-packages = true
 
+[[constraint]]
+  name = "github.com/go-playground/validator"
+  version = "10.6.1"
 
-[prune]
-  go-tests = true
-  unused-packages = true
+[[constraint]]
+  name = "github.com/gin-gonic/gin"
+  version = "1.5.0"
