@@ -3,19 +3,18 @@ package main
 import (
 	_ "github.com/go-playground/validator"
 	"github.com/gin-gonic/gin"
+	"design-api/router"
+	"fmt"
+	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/jmoiron/sqlx"
 )
 
 func main() {
-	r := gin.Default()
-	r.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "hello world",
-		})
-	})
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
-	r.Run("0.0.0.0:8082") // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+	gin.SetMode(gin.ReleaseMode)
+	r := gin.New()
+	router.InitRouter(r)
+	fmt.Println("初始化路由...")
+	if err := r.Run("0.0.0.0:8082"); err != nil {
+		fmt.Println("监听出错了:" + err.Error())
+	}
 }

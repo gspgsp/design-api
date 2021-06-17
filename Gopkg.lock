@@ -50,12 +50,31 @@
   version = "v10.6.1"
 
 [[projects]]
+  digest = "1:76a34ccf83d2e322e57c1492a52703190496932a3bf0af80397a46af4313c8e6"
+  name = "github.com/go-sql-driver/mysql"
+  packages = ["."]
+  pruneopts = ""
+  revision = "bcc459a906419e2890a50fc2c99ea6dd927a88f2"
+  version = "v1.6.0"
+
+[[projects]]
   digest = "1:019270a39e03c8ff951f6e536014c87b418bb0ad90b358929dd7d556546ea093"
   name = "github.com/golang/protobuf"
   packages = ["proto"]
   pruneopts = ""
   revision = "ae97035608a719c7a1c1c41bed0ae0744bdb0c6f"
   version = "v1.5.2"
+
+[[projects]]
+  digest = "1:d648c9960acdb0863f4e2ef7c650ba270862d210986b449009a35978e47348fd"
+  name = "github.com/jmoiron/sqlx"
+  packages = [
+    ".",
+    "reflectx",
+  ]
+  pruneopts = ""
+  revision = "92bfa368c21aafd33626444a47b2f99be2432623"
+  version = "v1.3.4"
 
 [[projects]]
   digest = "1:b9069a3828abff64a64ccdc7fa899c3d96e88eb4bb733b68e2b2f87ba5960d1d"
@@ -198,6 +217,8 @@
   input-imports = [
     "github.com/gin-gonic/gin",
     "github.com/go-playground/validator",
+    "github.com/go-sql-driver/mysql",
+    "github.com/jmoiron/sqlx",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1
