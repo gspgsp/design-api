@@ -7,6 +7,7 @@ import (
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/jmoiron/sqlx"
+	"design-api/config"
 )
 
 func main() {
@@ -14,7 +15,7 @@ func main() {
 	r := gin.New()
 	router.InitRouter(r)
 	fmt.Println("初始化路由...")
-	if err := r.Run("0.0.0.0:8082"); err != nil {
+	if err := r.Run(config.Config.Addr.Tcp); err != nil {
 		fmt.Println("监听出错了:" + err.Error())
 	}
 }

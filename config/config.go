@@ -30,8 +30,9 @@ func parseYaml() *configuration {
 }
 
 type configuration struct {
-	Mysql  mysql  `json:"mysql",yaml:"mysql"`
-	Redis  redis  `json:"redis",yaml:"redis"`
+	Mysql mysql `json:"mysql",yaml:"mysql"`
+	Redis redis `json:"redis",yaml:"redis"`
+	Addr  addr  `json:"addr",yaml:"addr"`
 }
 
 func (conf *configuration) yaml(dir string) (*configuration, error) {
@@ -71,4 +72,9 @@ type redis struct {
 	RedisDatabase int    `yaml:"redis_database",json:"redis_database"`
 	RedisUsername string `yaml:"redis_username",json:"redis_username"`
 	RedisPassword string `yaml:"redis_password",json:"redis_password"`
+}
+
+type addr struct {
+	Tcp  string `yaml:"tcp",json:"tcp"`
+	Unix string `yaml:"unix",json:"unix"`
 }

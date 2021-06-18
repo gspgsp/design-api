@@ -12,3 +12,6 @@ redis:
   redis_database: 3
   redis_username: root
   redis_password: root
+addr:
+  tcp: 0.0.0.0:80
+  unix: design-api.sock
