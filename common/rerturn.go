@@ -6,12 +6,12 @@ import (
 )
 
 // 返回响应，默认返回成功无数据
-func Response(c *gin.Context) *Return {
-	return &Return{http.StatusOK, http.StatusText(http.StatusOK), []interface{}{}, c}
+func Format(ctx *gin.Context) *Response {
+	return &Response{http.StatusOK, http.StatusText(http.StatusOK), []interface{}{}, ctx}
 }
 
-// 定义 Return 结构体
-type Return struct {
+// 定义 Response 结构体
+type Response struct {
 	Code    int          `json:"code"`
 	Message string       `json:"msg"`
 	Data    interface{}  `json:"data"`
@@ -19,24 +19,24 @@ type Return struct {
 }
 
 // 设置错误码
-func (res *Return) SetCode(code int) *Return {
+func (res *Response) SetCode(code int) *Response {
 	res.Code = code
 	return res
 }
 
 // 设置错误信息
-func (res *Return) SetMessage(msg string) *Return {
+func (res *Response) SetMessage(msg string) *Response {
 	res.Message = msg
 	return res
 }
 
 // 设置返回数据
-func (res *Return) SetData(data interface{}) *Return {
+func (res *Response) SetData(data interface{}) *Response {
 	res.Data = data
 	return res
 }
 
 // json返回结果
-func (res *Return) JsonReturn() {
+func (res *Response) JsonResponse() {
 	res.ctx.JSON(res.Code, res)
 }

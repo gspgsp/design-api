@@ -33,5 +33,5 @@ func Login(c *gin.Context) {
 		}
 	}
 
-	common.Response(c).SetData(slides).JsonReturn()
+	common.Format(c).SetData(slides).JsonResponse()
 }
