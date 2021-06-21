@@ -2,6 +2,32 @@
 
 
 [[projects]]
+  digest = "1:d343015fe8dc1b19195514e87a544b6a773ba63df63500dc365bcbce43f4fc94"
+  name = "github.com/aws/aws-sdk-go"
+  packages = [
+    "aws",
+    "aws/awserr",
+    "aws/awsutil",
+    "aws/client/metadata",
+    "aws/credentials",
+    "aws/endpoints",
+    "aws/request",
+    "aws/signer/v4",
+    "internal/context",
+    "internal/ini",
+    "internal/sdkio",
+    "internal/sdkmath",
+    "internal/shareddefaults",
+    "internal/strings",
+    "internal/sync/singleflight",
+    "private/protocol",
+    "private/protocol/rest",
+  ]
+  pruneopts = ""
+  revision = "56a221fbe3bd48a9808a4d2f2667b6a3677e5d76"
+  version = "v1.38.64"
+
+[[projects]]
   digest = "1:e35353e6b5c1a1350832f2f5ea87f1d42d491ce519bc6e2c65d5dd6d020e2a01"
   name = "github.com/gin-contrib/sse"
   packages = ["."]
@@ -58,12 +84,35 @@
   version = "v1.6.0"
 
 [[projects]]
+  digest = "1:a01080d20c45c031c13f3828c56e58f4f51d926a482ad10cc0316225097eb7ea"
+  name = "github.com/go-stack/stack"
+  packages = ["."]
+  pruneopts = ""
+  revision = "2fee6af1a9795aafbe0253a0cfbdf668e1fb8a9a"
+  version = "v1.8.0"
+
+[[projects]]
   digest = "1:019270a39e03c8ff951f6e536014c87b418bb0ad90b358929dd7d556546ea093"
   name = "github.com/golang/protobuf"
   packages = ["proto"]
   pruneopts = ""
   revision = "ae97035608a719c7a1c1c41bed0ae0744bdb0c6f"
   version = "v1.5.2"
+
+[[projects]]
+  digest = "1:346ac7ba276c19afdc04c620409cd400d60c2cdfe0174745aa0af41e3f3915db"
+  name = "github.com/golang/snappy"
+  packages = ["."]
+  pruneopts = ""
+  revision = "674baa8c7fc30da5df3074a459494a7e6b427dff"
+  version = "v0.0.3"
+
+[[projects]]
+  digest = "1:13fe471d0ed891e8544eddfeeb0471fd3c9f2015609a1c000aefdedf52a19d40"
+  name = "github.com/jmespath/go-jmespath"
+  packages = ["."]
+  pruneopts = ""
+  revision = "c2b33e84"
 
 [[projects]]
   digest = "1:d648c9960acdb0863f4e2ef7c650ba270862d210986b449009a35978e47348fd"
@@ -83,6 +132,19 @@
   pruneopts = ""
   revision = "e6b9536d3649bda3e8842bb7e4fab489d79a97ea"
   version = "v1.1.11"
+
+[[projects]]
+  digest = "1:fa1c1ee333121d0aa197589a525813b68b4f3fb6ac549ca8c2f0a3742ad0e5d8"
+  name = "github.com/klauspost/compress"
+  packages = [
+    "fse",
+    "huff0",
+    "zstd",
+    "zstd/internal/xxhash",
+  ]
+  pruneopts = ""
+  revision = "5453ad3645a8c3a61091d6508d3d0e32ad950b79"
+  version = "v1.13.1"
 
 [[projects]]
   digest = "1:73f791239c3a1cbcca90e65968bf920fb1b997e8fcdf97266cd505b964709297"
@@ -117,6 +179,14 @@
   version = "1.0.1"
 
 [[projects]]
+  digest = "1:c45802472e0c06928cd997661f2af610accd85217023b1d5f6331bebce0671d3"
+  name = "github.com/pkg/errors"
+  packages = ["."]
+  pruneopts = ""
+  revision = "614d223910a179a466c1767a985424175c39b465"
+  version = "v0.9.1"
+
+[[projects]]
   digest = "1:ae6ab486ac352d97584564189620aff7575d4ac3916b07932894a7393451a533"
   name = "github.com/ugorji/go"
   packages = ["codec"]
@@ -125,12 +195,100 @@
   version = "v1.2.6"
 
 [[projects]]
+  digest = "1:e3c192bbd32961c2aa86ac067d695fda6dcaa27c14d5b334ba5e1e8e1caf0d02"
+  name = "github.com/xdg-go/pbkdf2"
+  packages = ["."]
+  pruneopts = ""
+  revision = "7f452ef1dac88350356f1bb84a23748205e64b96"
+  version = "v1.0.0"
+
+[[projects]]
+  digest = "1:c690666fc473c441d92d0765c1f773825b34086d1148e357e7b5ea8ae0925e8c"
+  name = "github.com/xdg-go/scram"
+  packages = ["."]
+  pruneopts = ""
+  revision = "2ad501880a7f7bcc9af290278baa3658c9a2f2cd"
+  version = "v1.0.2"
+
+[[projects]]
+  digest = "1:371e44514be249a0554857dbed1f36f0632a3c95703c2287215eb951ffd27ff7"
+  name = "github.com/xdg-go/stringprep"
+  packages = ["."]
+  pruneopts = ""
+  revision = "4fcaaf19bc2a8e388ba275a82eb34c29abcd0bc9"
+  version = "v1.0.2"
+
+[[projects]]
+  digest = "1:96a6e88dae5c6c3e9540fa4069a7112427de946ed7f6ecec851ecb425a585aeb"
+  name = "github.com/youmark/pkcs8"
+  packages = ["."]
+  pruneopts = ""
+  revision = "1be2e3e5546da8a58903ff4adcfab015022538ea"
+  version = "v1.1"
+
+[[projects]]
+  digest = "1:687fa33d7ab8fad02d388f45433f0406f8faf6c58380158bc35ee769937d51ce"
+  name = "go.mongodb.org/mongo-driver"
+  packages = [
+    "bson",
+    "bson/bsoncodec",
+    "bson/bsonoptions",
+    "bson/bsonrw",
+    "bson/bsontype",
+    "bson/primitive",
+    "event",
+    "internal",
+    "mongo",
+    "mongo/address",
+    "mongo/description",
+    "mongo/options",
+    "mongo/readconcern",
+    "mongo/readpref",
+    "mongo/writeconcern",
+    "tag",
+    "version",
+    "x/bsonx",
+    "x/bsonx/bsoncore",
+    "x/mongo/driver",
+    "x/mongo/driver/auth",
+    "x/mongo/driver/auth/internal/gssapi",
+    "x/mongo/driver/connstring",
+    "x/mongo/driver/dns",
+    "x/mongo/driver/mongocrypt",
+    "x/mongo/driver/mongocrypt/options",
+    "x/mongo/driver/ocsp",
+    "x/mongo/driver/operation",
+    "x/mongo/driver/session",
+    "x/mongo/driver/topology",
+    "x/mongo/driver/uuid",
+    "x/mongo/driver/wiremessage",
+  ]
+  pruneopts = ""
+  revision = "2f0d7d15171a00a42deac6d06f8b5e1a29c809a0"
+  version = "v1.5.3"
+
+[[projects]]
   branch = "master"
   digest = "1:848141632c781af60b6e0e5a5e1b3b7337fc6b18077431f311cf7fab5b834f64"
   name = "golang.org/x/crypto"
-  packages = ["sha3"]
+  packages = [
+    "ocsp",
+    "pbkdf2",
+    "sha3",
+  ]
   pruneopts = ""
   revision = "c07d793c2f9aacf728fe68cbd7acd73adbd04159"
+
+[[projects]]
+  branch = "master"
+  digest = "1:23b5a4f402f3629fb94197b313a95e90f091fb8caeec91d7eb380d1da3fd702a"
+  name = "golang.org/x/sync"
+  packages = [
+    "errgroup",
+    "semaphore",
+  ]
+  pruneopts = ""
+  revision = "036812b2e83c0ddf193dd5a34e034151da389d09"
 
 [[projects]]
   branch = "master"
@@ -152,8 +310,12 @@
     "internal/language",
     "internal/language/compact",
     "internal/tag",
+    "internal/triegen",
+    "internal/ucd",
     "language",
+    "transform",
     "unicode/cldr",
+    "unicode/norm",
   ]
   pruneopts = ""
   revision = "e328d63cff14134669501e0e154e4f141c784322"
@@ -219,6 +381,9 @@
     "github.com/go-playground/validator",
     "github.com/go-sql-driver/mysql",
     "github.com/jmoiron/sqlx",
+    "go.mongodb.org/mongo-driver/mongo",
+    "go.mongodb.org/mongo-driver/mongo/options",
+    "go.mongodb.org/mongo-driver/mongo/readpref",
     "gopkg.in/yaml.v2",
   ]
   solver-name = "gps-cdcl"

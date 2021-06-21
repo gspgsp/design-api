@@ -15,3 +15,9 @@ redis:
 addr:
   tcp: 0.0.0.0:80
   unix: design-api.sock
+mongodb:
+  mongodb_host: 127.0.0.1
+  mongodb_port: 27017
+  mongodb_database: xxx
+  mongodb_username: xxx
+  mongodb_password: xxx
