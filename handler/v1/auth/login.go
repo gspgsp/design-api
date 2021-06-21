@@ -38,8 +38,8 @@ func Login(c *gin.Context) {
 
 	//insert mongodb
 	noSqlLog.Init("mongodb://" + config.Config.Mongodb.MongodbUsername + ":" + config.Config.Mongodb.MongodbPassword + "@" + config.Config.Mongodb.MongodbHost + ":" + config.Config.Mongodb.MongodbPort)
-	mgo := noSqlLog.NewMgo("design-api", "login")
-	res := mgo.InsertOne(bson.D{{"user", "1000"}, {"action", "login"}})
+	mgo := noSqlLog.NewMgo(config.Config.Mongodb.MongodbDatabase, "login")
+	res := mgo.InsertOne(bson.D{{"user", "1002"}, {"action", "login"}})
 
 	log.Printf("mongodb 插入返回ID:%s", res.InsertedID)
 	//
