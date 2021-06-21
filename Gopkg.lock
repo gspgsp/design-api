@@ -219,6 +219,7 @@
     "github.com/go-playground/validator",
     "github.com/go-sql-driver/mysql",
     "github.com/jmoiron/sqlx",
+    "gopkg.in/yaml.v2",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1

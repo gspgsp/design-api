@@ -6,6 +6,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 	"time"
+	"log"
 )
 
 var Db *sqlx.DB
@@ -18,7 +19,7 @@ func init() {
 	if err == nil && db != nil {
 		Db = db
 	} else {
-		fmt.Printf("mysql 连接错误")
+		log.Println("mysql 连接错误")
 	}
 }
 
