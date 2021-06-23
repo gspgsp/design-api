@@ -76,6 +76,22 @@
   version = "v10.6.1"
 
 [[projects]]
+  digest = "1:f1ded175282abf4838d1aa6705e8e50f4e64676615604e12f8660d5ba7312785"
+  name = "github.com/go-redis/redis"
+  packages = [
+    ".",
+    "internal",
+    "internal/consistenthash",
+    "internal/hashtag",
+    "internal/pool",
+    "internal/proto",
+    "internal/util",
+  ]
+  pruneopts = ""
+  revision = "16ab0f2ac309166bfef5cde51742f84c61c1e73c"
+  version = "v6.15.9"
+
+[[projects]]
   digest = "1:76a34ccf83d2e322e57c1492a52703190496932a3bf0af80397a46af4313c8e6"
   name = "github.com/go-sql-driver/mysql"
   packages = ["."]
@@ -379,11 +395,12 @@
   input-imports = [
     "github.com/gin-gonic/gin",
     "github.com/go-playground/validator",
+    "github.com/go-redis/redis",
     "github.com/go-sql-driver/mysql",
     "github.com/jmoiron/sqlx",
+    "go.mongodb.org/mongo-driver/bson",
     "go.mongodb.org/mongo-driver/mongo",
     "go.mongodb.org/mongo-driver/mongo/options",
-    "go.mongodb.org/mongo-driver/mongo/readpref",
     "gopkg.in/yaml.v2",
   ]
   solver-name = "gps-cdcl"

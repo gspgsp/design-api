@@ -6,7 +6,6 @@ import (
 	"log"
 	"design-api/model"
 	noSqlLog "design-api/common/log"
-	"design-api/config"
 	"go.mongodb.org/mongo-driver/bson"
 )
 
@@ -37,11 +36,15 @@ func Login(c *gin.Context) {
 	}
 
 	//insert mongodb
-	noSqlLog.Init("mongodb://" + config.Config.Mongodb.MongodbUsername + ":" + config.Config.Mongodb.MongodbPassword + "@" + config.Config.Mongodb.MongodbHost + ":" + config.Config.Mongodb.MongodbPort)
-	mgo := noSqlLog.NewMgo(config.Config.Mongodb.MongodbDatabase, "login")
-	res := mgo.InsertOne(bson.D{{"user", "1002"}, {"action", "login"}})
+	mgo := noSqlLog.NewMgo("login")
+	res := mgo.InsertOne(bson.D{{"user", "1006"}, {"action", "login"}})
 
 	log.Printf("mongodb 插入返回ID:%s", res.InsertedID)
+	//
+
+	//insert redis
+	rd := noSqlLog.NewRd(7)
+	rd.Set("test1024", 1025, -1)
 	//
 
 	common.Format(c).SetData(slides).JsonResponse()

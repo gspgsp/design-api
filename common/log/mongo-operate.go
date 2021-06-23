@@ -4,6 +4,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"context"
 	"log"
+	"design-api/config"
 )
 
 type mgo struct {
@@ -11,8 +12,8 @@ type mgo struct {
 	collection string
 }
 
-func NewMgo(database, collection string) *mgo {
-	return &mgo{database, collection}
+func NewMgo(collection string) *mgo {
+	return &mgo{config.Config.Mongodb.MongodbDatabase, collection}
 }
 
 func (m *mgo) InsertOne(value interface{}) *mongo.InsertOneResult {

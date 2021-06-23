@@ -9,6 +9,7 @@ import (
 	"design-api/config"
 	"runtime"
 	"log"
+	_ "design-api/common/log"
 )
 
 var sysType string
