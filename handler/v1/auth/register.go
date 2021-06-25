@@ -4,21 +4,30 @@ import (
 	"github.com/gin-gonic/gin"
 	"design-api/util"
 	"log"
+	"design-api/common/env"
 )
 
 func Register(c *gin.Context) {
 
-	token, err := util.GenerateToken("1","guo")
+	token, code := util.GenerateToken("101", "guo")
 
-	if err != nil {
-		log.Println("token 生成错误:" +err.Error())
+	claim, _:= c.Get("claim")
+	log.Printf("claim is:%v",claim)
 
-		c.JSON(419, gin.H{
-			"error": err.Error(),
+	if code != env.SUCCESS {
+		c.JSON(env.ERROR, gin.H{
+			"code":    code,
+			"message": env.MsgFlags[code],
 		})
-	}else {
-		c.JSON(200, gin.H{
-			"token": token,
-		})
+
+		c.Abort()
+		return
 	}
+
+	c.JSON(env.SUCCESS, gin.H{
+		"code":    code,
+		"message": env.MsgFlags[code],
+		"token_type":"bearer",
+		"access_token":  token,
+	})
 }
