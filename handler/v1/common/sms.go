@@ -9,7 +9,9 @@ import (
 	"design-api/common"
 )
 
+//验证码长度
 var codeLength = 6
+
 /**
 发送短信验证码
  */

@@ -30,7 +30,7 @@ func InitRouter(r *gin.Engine) {
 		groupV1Auth := groupV1.Group("auth")
 		{
 			//groupV1Auth.Use(authMiddleware.Auth()).Any("register", auth.Register)
-			groupV1Auth.Any("register", auth.Register)
+			groupV1Auth.POST("register", auth.Register)
 		}
 	}
 }
