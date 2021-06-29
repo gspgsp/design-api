@@ -3,7 +3,8 @@ package router
 import (
 	"github.com/gin-gonic/gin"
 	"design-api/handler/v1/auth"
-	//authMiddleware "design-api/middleware/auth"
+
+	"design-api/handler/v1/common"
 )
 
 /**
@@ -13,6 +14,12 @@ func InitRouter(r *gin.Engine) {
 	//v1
 	groupV1 := r.Group("v1")
 	{
+		//公共路由
+		groupCommon := groupV1.Group("common")
+		{
+			groupCommon.POST("sms", common.SendSms)
+		}
+
 		//不需要登录的路由
 		groupV1NAuth := groupV1.Group("auth")
 		{
