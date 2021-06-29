@@ -3,7 +3,7 @@ package router
 import (
 	"github.com/gin-gonic/gin"
 	"design-api/handler/v1/auth"
-	authMiddleware "design-api/middleware/auth"
+	//authMiddleware "design-api/middleware/auth"
 )
 
 /**
@@ -22,8 +22,8 @@ func InitRouter(r *gin.Engine) {
 		//需要授权登录的路由
 		groupV1Auth := groupV1.Group("auth")
 		{
-			groupV1Auth.Use(authMiddleware.Auth()).Any("register", auth.Register)
-			//groupV1Auth.Any("register", auth.Register)
+			//groupV1Auth.Use(authMiddleware.Auth()).Any("register", auth.Register)
+			groupV1Auth.Any("register", auth.Register)
 		}
 	}
 }
