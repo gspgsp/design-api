@@ -5,6 +5,7 @@ import (
 	"design-api/util"
 	"log"
 	"design-api/common/env"
+	"design-api/common"
 )
 
 func Register(c *gin.Context) {
@@ -15,19 +16,11 @@ func Register(c *gin.Context) {
 	log.Printf("claim is:%v", claim)
 
 	if code != env.SUCCESS {
-		c.JSON(env.ERROR, gin.H{
-			"code":    code,
-			"message": env.MsgFlags[code],
-		})
+		common.Format(c).SetStatus(env.ERROR).SetCode(code).SetMessage(env.MsgFlags[code]).JsonResponse()
 
 		c.Abort()
 		return
 	}
 
-	c.JSON(env.SUCCESS, gin.H{
-		"code":         env.RESPONSE_SUCCESS,
-		"message":      env.MsgFlags[env.RESPONSE_SUCCESS],
-		"token_type":   "Bearer",
-		"access_token": token,
-	})
+	common.Format(c).SetData(map[string]string{"token_type": "Bearer", "access_token": token}).JsonResponse()
 }

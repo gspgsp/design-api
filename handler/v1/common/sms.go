@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"design-api/common/env"
 	"design-api/validator/auth"
+	"design-api/common"
 )
 
 var codeLength = 6
@@ -19,23 +20,14 @@ func SendSms(c *gin.Context) {
 	if code := smsParam.ValidateParam(); code == env.RESPONSE_SUCCESS {
 		sms := &service.SmsService{Len: codeLength}
 		if sms.SendSmsCode(mobile) == false {
-			c.JSON(env.ERROR, gin.H{
-				"code":    env.RESPONSE_FAIL,
-				"message": env.MsgFlags[env.RESPONSE_FAIL],
-			})
+			common.Format(c).SetStatus(env.ERROR).SetCode(env.RESPONSE_FAIL).SetMessage(env.MsgFlags[env.RESPONSE_FAIL]).JsonResponse()
 
 			c.Abort()
 			return
 		}
 
-		c.JSON(env.SUCCESS, gin.H{
-			"code":    env.RESPONSE_SUCCESS,
-			"message": env.MsgFlags[env.RESPONSE_SUCCESS],
-		})
+		common.Format(c).JsonResponse()
 	} else {
-		c.JSON(env.ERROR, gin.H{
-			"code":    env.PARAM_REQUIRED,
-			"message": env.MsgFlags[env.PARAM_REQUIRED],
-		})
+		common.Format(c).SetStatus(env.ERROR).SetCode(env.PARAM_REQUIRED).SetMessage(env.MsgFlags[env.PARAM_REQUIRED]).JsonResponse()
 	}
 }
