@@ -26,10 +26,10 @@ func (sms *SmsService) SendSmsCode(phone string) (string, error) {
 
 	code := randInt.Generate(sms.Len)
 	//阿里云短信
-	//err := aliSmsSend(phone, code)
-	//if err != nil {
-	//	return "", err
-	//}
+	err := aliSmsSend(phone, code)
+	if err != nil {
+		return "", err
+	}
 
 	codeKey += new(util.RandStr).Generate(10)
 	common.Cache.Set(codeKey, code, 5*time.Minute)
