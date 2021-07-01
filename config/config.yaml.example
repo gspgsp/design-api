@@ -21,3 +21,9 @@ mongodb:
   mongodb_database: xxx
   mongodb_username: xxx
   mongodb_password: xxx
+sms:
+  region_id: cn-hangzhou
+  access_key_id: xxx
+  access_key_secret: xxx
+  sign_name: xxx
+  template_code: xxx

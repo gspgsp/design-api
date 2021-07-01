@@ -34,6 +34,7 @@ type configuration struct {
 	Redis   redis   `json:"redis",yaml:"redis"`
 	Addr    addr    `json:"addr",yaml:"addr"`
 	Mongodb mongodb `json:"mongodb",yaml:"mongodb"`
+	Sms     sms     `json:"sms",yaml:"sms"`
 }
 
 func (conf *configuration) yaml(dir string) (*configuration, error) {
@@ -86,4 +87,12 @@ type mongodb struct {
 	MongodbDatabase string `yaml:"mongodb_database",json:"mongodb_database"`
 	MongodbUsername string `yaml:"mongodb_username",json:"mongodb_username"`
 	MongodbPassword string `yaml:"mongodb_password",json:"mongodb_password"`
+}
+
+type sms struct {
+	RegionId        string `yaml:"region_id",json:"region_id"`
+	AccessKeyId     string `yaml:"access_key_id",json:"access_key_id"`
+	AccessKeySecret string `yaml:"access_key_secret",json:"access_key_secret"`
+	SignName        string `yaml:"sign_name",json:"sign_name"`
+	TemplateCode    string `yaml:"template_code",json:"template_code"`
 }

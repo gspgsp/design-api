@@ -15,4 +15,10 @@ var MsgFlags = map[int]string{
 	ERROR_AUTH_VALID:               "Token验证错误",
 
 	PARAM_REQUIRED: "参数必须",
+
+	SMS_CODE_SEND_ERROR:   "验证码发送失败",
+	SMS_CODE_VERIFY_ERROR: "验证码验证错误",
+	SMS_CODE_EXPIRE_ERROR: "验证码已过期",
+
+	DB_INSERT_ERROR: "数据插入错误",
 }

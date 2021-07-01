@@ -2,6 +2,27 @@
 
 
 [[projects]]
+  digest = "1:ab82edd109aae8502dd79e38b08efbed480813572f7bf712a395dc72fa2a000c"
+  name = "github.com/aliyun/alibaba-cloud-sdk-go"
+  packages = [
+    ".",
+    "sdk",
+    "sdk/auth",
+    "sdk/auth/credentials",
+    "sdk/auth/credentials/provider",
+    "sdk/auth/signers",
+    "sdk/endpoints",
+    "sdk/errors",
+    "sdk/requests",
+    "sdk/responses",
+    "sdk/utils",
+    "services/dysmsapi",
+  ]
+  pruneopts = ""
+  revision = "340b971839481db3b6f46d19314d076976df1cb4"
+  version = "v1.61.1164"
+
+[[projects]]
   digest = "1:d343015fe8dc1b19195514e87a544b6a773ba63df63500dc365bcbce43f4fc94"
   name = "github.com/aws/aws-sdk-go"
   packages = [
@@ -203,12 +224,28 @@
   version = "1.0.1"
 
 [[projects]]
+  digest = "1:4c0404dc03d974acd5fcd8b8d3ce687b13bd169db032b89275e8b9d77b98ce8c"
+  name = "github.com/patrickmn/go-cache"
+  packages = ["."]
+  pruneopts = ""
+  revision = "a3647f8e31d79543b2d0f0ae2fe5c379d72cedc0"
+  version = "v2.1.0"
+
+[[projects]]
   digest = "1:c45802472e0c06928cd997661f2af610accd85217023b1d5f6331bebce0671d3"
   name = "github.com/pkg/errors"
   packages = ["."]
   pruneopts = ""
   revision = "614d223910a179a466c1767a985424175c39b465"
   version = "v0.9.1"
+
+[[projects]]
+  digest = "1:7f569d906bdd20d906b606415b7d794f798f91a62fcfb6a4daa6d50690fb7a3f"
+  name = "github.com/satori/go.uuid"
+  packages = ["."]
+  pruneopts = ""
+  revision = "f58768cc1a7a7e77a3bd49e98cdd21419399b6a3"
+  version = "v1.2.0"
 
 [[projects]]
   digest = "1:ae6ab486ac352d97584564189620aff7575d4ac3916b07932894a7393451a533"
@@ -296,6 +333,8 @@
   digest = "1:848141632c781af60b6e0e5a5e1b3b7337fc6b18077431f311cf7fab5b834f64"
   name = "golang.org/x/crypto"
   packages = [
+    "bcrypt",
+    "blowfish",
     "ocsp",
     "pbkdf2",
     "sha3",
@@ -390,6 +429,14 @@
   version = "v9.31.0"
 
 [[projects]]
+  digest = "1:c10363c8377ccc6b0d417ba20c037e4bd2fbb5a6e4879873606595804cc22ec6"
+  name = "gopkg.in/ini.v1"
+  packages = ["."]
+  pruneopts = ""
+  revision = "5e97220809ffaa826f787728501264e9114cb834"
+  version = "v1.62.0"
+
+[[projects]]
   digest = "1:ee05f739e27c55032bf797e28915dd209b07f5b46d098cdf115cacfd3b179fe4"
   name = "gopkg.in/yaml.v2"
   packages = ["."]
@@ -401,15 +448,22 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
+    "github.com/aliyun/alibaba-cloud-sdk-go",
+    "github.com/aliyun/alibaba-cloud-sdk-go/services/dysmsapi",
     "github.com/dgrijalva/jwt-go",
     "github.com/gin-gonic/gin",
     "github.com/go-playground/validator",
     "github.com/go-redis/redis",
     "github.com/go-sql-driver/mysql",
     "github.com/jmoiron/sqlx",
+    "github.com/patrickmn/go-cache",
+    "github.com/pkg/errors",
+    "github.com/satori/go.uuid",
     "go.mongodb.org/mongo-driver/bson",
     "go.mongodb.org/mongo-driver/mongo",
     "go.mongodb.org/mongo-driver/mongo/options",
+    "golang.org/x/crypto/bcrypt",
+    "gopkg.in/ini.v1",
     "gopkg.in/yaml.v2",
   ]
   solver-name = "gps-cdcl"

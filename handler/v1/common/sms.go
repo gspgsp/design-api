@@ -17,18 +17,17 @@ var codeLength = 6
  */
 func SendSms(c *gin.Context) {
 	mobile, _ := c.GetPostForm("mobile")
-
 	smsParam := &auth.SmsParam{Mobile: mobile}
 	if code := smsParam.ValidateParam(); code == env.RESPONSE_SUCCESS {
 		sms := &service.SmsService{Len: codeLength}
-		if sms.SendSmsCode(mobile) == false {
-			common.Format(c).SetStatus(env.ERROR).SetCode(env.RESPONSE_FAIL).SetMessage(env.MsgFlags[env.RESPONSE_FAIL]).JsonResponse()
-
+		codeKey, err := sms.SendSmsCode(mobile)
+		if err != nil {
+			common.Format(c).SetStatus(env.ERROR).SetCode(env.SMS_CODE_SEND_ERROR).SetMessage(env.MsgFlags[env.SMS_CODE_SEND_ERROR]).JsonResponse()
 			c.Abort()
 			return
 		}
 
-		common.Format(c).JsonResponse()
+		common.Format(c).SetData(map[string]interface{}{"code_key": codeKey}).JsonResponse()
 	} else {
 		common.Format(c).SetStatus(env.ERROR).SetCode(env.PARAM_REQUIRED).SetMessage(env.MsgFlags[env.PARAM_REQUIRED]).JsonResponse()
 	}
