@@ -21,4 +21,6 @@ var MsgFlags = map[int]string{
 	SMS_CODE_EXPIRE_ERROR: "验证码已过期",
 
 	DB_INSERT_ERROR: "数据插入错误",
+
+	ACCOUNT_ERROR: "账号或密码错误",
 }

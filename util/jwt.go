@@ -12,19 +12,18 @@ var jwtSecret = []byte("design")
 const EXPIRE_TIME = 360 * time.Hour
 
 type Claims struct {
-	UserName string `json:"user_name"`
+	UserId int64 `json:"user_id"`
 	jwt.StandardClaims
 }
 
 /**
 生成token
  */
-func GenerateToken(id, username string) (string, int) {
+func GenerateToken(id int64) (string, int) {
 	expireTime := time.Now().Add(EXPIRE_TIME)
 	claims := Claims{
-		username,
+		id,
 		jwt.StandardClaims{
-			Id:        id,
 			ExpiresAt: expireTime.Unix(),
 			IssuedAt:  time.Now().Unix(),
 		},
@@ -37,7 +36,7 @@ func GenerateToken(id, username string) (string, int) {
 		return "", env.ERROR_AUTH_TOKEN
 	}
 
-	return signedToken, env.SUCCESS
+	return signedToken, env.RESPONSE_SUCCESS
 }
 
 /**

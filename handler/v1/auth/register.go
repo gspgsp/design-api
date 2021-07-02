@@ -8,10 +8,13 @@ import (
 	"design-api/util"
 )
 
+/**
+注册
+ */
 func Register(c *gin.Context) {
 
 	//注册操作
-	code := service.Register(c)
+	code, userId := service.Register(c)
 
 	if code != env.RESPONSE_SUCCESS {
 		common.Format(c).SetStatus(env.ERROR).SetCode(code).SetMessage(env.MsgFlags[code]).JsonResponse()
@@ -20,8 +23,7 @@ func Register(c *gin.Context) {
 		return
 	}
 
-	token, code := util.GenerateToken("101", "guo")
-
+	token, _ := util.GenerateToken(userId)
 	common.Format(c).SetData(map[string]string{"token_type": "Bearer", "access_token": token}).JsonResponse()
 
 	//registerParam := &auth.RegisterParam{}

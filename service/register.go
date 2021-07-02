@@ -6,14 +6,13 @@ import (
 	"design-api/common"
 	"design-api/model"
 	"design-api/util"
-	"log"
 	uuid2 "github.com/satori/go.uuid"
 	"fmt"
 	"time"
 	"github.com/gin-gonic/gin"
 )
 
-func Register(c *gin.Context) (int) {
+func Register(c *gin.Context) (int, int64) {
 	c.Request.ParseForm()
 	values := c.Request.Form
 
@@ -23,11 +22,11 @@ func Register(c *gin.Context) (int) {
 	if code := registerParam.ValidateParam(); code == env.RESPONSE_SUCCESS {
 		smsCode, ok := common.Cache.Get(registerParam.CodeKey)
 		if !ok {
-			return env.SMS_CODE_EXPIRE_ERROR
+			return env.SMS_CODE_EXPIRE_ERROR, 0
 		}
 
 		if smsCode != registerParam.Code {
-			return env.SMS_CODE_VERIFY_ERROR
+			return env.SMS_CODE_VERIFY_ERROR, 0
 		}
 
 		//TODO::注册业务 要不要 DAO 层?
@@ -36,29 +35,11 @@ func Register(c *gin.Context) (int) {
 		randStr := util.RandStr{}
 		nickname := randStr.Generate(10)
 
-		user := models.User{Mobile: registerParam.Mobile, Password: password, Uuid: uuid, NickName: nickname, RegisterAt: time.Now().Unix(), RegisterIp: util.ClientIp(c), CreatedAt: time.Now().Unix(), UpdatedAt: time.Now().Unix()}
+		user := models.User{Mobile: registerParam.Mobile, Password: password, Uuid: uuid, Nickname: nickname, RegisterAt: time.Now().Unix(), RegisterIp: util.ClientIp(c), CreatedAt: time.Now().Unix(), UpdatedAt: time.Now().Unix()}
+		common.Db.Create(&user)
 
-		res, err := common.Db.NamedExec("insert into q_users(uuid,mobile,password,nickname,register_at,register_ip,created_at,updated_at) values(:uuid,:mobile,:password,:nickname,:register_at,:register_ip,:created_at,:updated_at)", map[string]interface{}{
-			"mobile":      user.Mobile,
-			"password":    user.Password,
-			"uuid":        user.Uuid,
-			"nickname":    user.NickName,
-			"register_at": user.RegisterAt,
-			"register_ip": user.RegisterIp,
-			"created_at":  user.CreatedAt,
-			"updated_at":  user.UpdatedAt,
-		})
-
-		if err != nil {
-			log.Printf("insert err is:%v\n", err.Error())
-			return env.DB_INSERT_ERROR
-		}
-
-		userId, _ := res.LastInsertId()
-		log.Printf("userId is:%d\n", userId)
-
-		return env.RESPONSE_SUCCESS
+		return env.RESPONSE_SUCCESS, *user.ID
 	} else {
-		return env.PARAM_REQUIRED
+		return env.PARAM_REQUIRED, 0
 	}
 }

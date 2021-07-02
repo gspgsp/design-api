@@ -36,7 +36,7 @@ func Auth() gin.HandlerFunc {
 			}
 
 			//将解析后的有效载荷claim重新写入gin.Context引用对象中
-			c.Set("claim", claim)
+			c.Set("userId", claim.UserId)
 			c.Next()
 		}
 	}

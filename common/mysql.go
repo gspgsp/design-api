@@ -2,19 +2,24 @@ package common
 
 import (
 	"design-api/config"
-	"fmt"
-	_ "github.com/go-sql-driver/mysql"
-	"github.com/jmoiron/sqlx"
-	"time"
+	//_ "github.com/go-sql-driver/mysql"
+	//_ "github.com/jmoiron/sqlx"
+	//"github.com/jinzhu/gorm"
 	"log"
+	"gorm.io/gorm"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm/schema"
 )
 
-var Db *sqlx.DB
+var Db *gorm.DB
 
 func init() {
-	dataSourceName := fmt.Sprintf("%v:%v@tcp(%v:%v)/%v", config.Config.Mysql.DbUsername, config.Config.Mysql.DbPassword, config.Config.Mysql.DbHost, config.Config.Mysql.DbPort, config.Config.Mysql.DbDatabase)
-	db, err := sqlx.Connect("mysql", dataSourceName)
-	db.SetConnMaxLifetime(300 * time.Second)
+	dsn := config.Config.Mysql.DbUsername+":"+config.Config.Mysql.DbPassword+"@tcp("+config.Config.Mysql.DbHost+":"+config.Config.Mysql.DbPort+")/"+config.Config.Mysql.DbDatabase+"?charset=utf8&parseTime=true&loc=Local"
+	db, err := gorm.Open(mysql.Open(dsn),&gorm.Config{
+		NamingStrategy:schema.NamingStrategy{
+			TablePrefix:"q_",
+		},
+	})
 
 	if err == nil && db != nil {
 		Db = db

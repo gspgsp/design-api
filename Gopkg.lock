@@ -153,6 +153,22 @@
   version = "v0.0.3"
 
 [[projects]]
+  digest = "1:a7b97371fb9af808b6a4fcc6693276ef7869bb1f282c3c87038c6c7e74ef4ae6"
+  name = "github.com/jinzhu/inflection"
+  packages = ["."]
+  pruneopts = ""
+  revision = "f5c5f50e6090ae76a29240b61ae2a90dd810112e"
+  version = "v1.0.0"
+
+[[projects]]
+  digest = "1:ef9df48473f8860fedb4ddc7ef93df1f551d18786f1a02594368cbce2e0da1a2"
+  name = "github.com/jinzhu/now"
+  packages = ["."]
+  pruneopts = ""
+  revision = "e8c28ddddc015eb8c0a5781a7428cc0bc1b2a5c9"
+  version = "v1.1.2"
+
+[[projects]]
   digest = "1:13fe471d0ed891e8544eddfeeb0471fd3c9f2015609a1c000aefdedf52a19d40"
   name = "github.com/jmespath/go-jmespath"
   packages = ["."]
@@ -444,6 +460,30 @@
   revision = "7649d4548cb53a614db133b2a8ac1f31859dda8c"
   version = "v2.4.0"
 
+[[projects]]
+  digest = "1:0450ace12daaa91f35e48519a2e88f9cf6b1ec3763f81b5536546185703238ca"
+  name = "gorm.io/driver/mysql"
+  packages = ["."]
+  pruneopts = ""
+  revision = "127a36e45a330906a977ab810bcc9b5008d2d9ce"
+  version = "v1.1.1"
+
+[[projects]]
+  digest = "1:80a9048aab04e9e8f8ce09ad3bc913a8fd90e5284b92360e305f1b0931e467f2"
+  name = "gorm.io/gorm"
+  packages = [
+    ".",
+    "callbacks",
+    "clause",
+    "logger",
+    "migrator",
+    "schema",
+    "utils",
+  ]
+  pruneopts = ""
+  revision = "3226937f683ae4e436cb970b916b807a6704a215"
+  version = "v1.21.11"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
@@ -459,12 +499,14 @@
     "github.com/patrickmn/go-cache",
     "github.com/pkg/errors",
     "github.com/satori/go.uuid",
-    "go.mongodb.org/mongo-driver/bson",
     "go.mongodb.org/mongo-driver/mongo",
     "go.mongodb.org/mongo-driver/mongo/options",
     "golang.org/x/crypto/bcrypt",
     "gopkg.in/ini.v1",
     "gopkg.in/yaml.v2",
+    "gorm.io/driver/mysql",
+    "gorm.io/gorm",
+    "gorm.io/gorm/schema",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1
