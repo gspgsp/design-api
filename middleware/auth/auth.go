@@ -41,3 +41,24 @@ func Auth() gin.HandlerFunc {
 		}
 	}
 }
+
+/**
+对于不需要授权，但是又传了access_token的情况
+ */
+func WithAccessToken() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.Set("userId", 0)
+
+		authorization := c.Request.Header.Get("Authorization")
+		if authorization != "" {
+			tokenSlice := strings.Split(authorization, " ")
+			claim, code := util.ParseToken(tokenSlice[1])
+			if code == env.SUCCESS {
+				//将解析后的有效载荷claim重新写入gin.Context引用对象中
+				c.Set("userId", claim.UserId)
+			}
+		}
+
+		c.Next()
+	}
+}

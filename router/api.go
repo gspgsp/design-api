@@ -7,6 +7,7 @@ import (
 	"design-api/handler/v1/common"
 	"design-api/handler/v1/user"
 	middleware "design-api/middleware/auth"
+	"design-api/handler/v1/slide"
 )
 
 /**
@@ -22,17 +23,23 @@ func InitRouter(r *gin.Engine) {
 			groupCommon.POST("sms", common.SendSms)
 		}
 
-		//不需要登录的路由
-		groupV1NAuth := groupV1.Group("auth")
+		//用户登录注册路由
+		groupV1Auth := groupV1.Group("auth")
 		{
-			groupV1NAuth.POST("register", auth.Register)
-			groupV1NAuth.POST("login", auth.Login)
+			groupV1Auth.POST("register", auth.Register)
+			groupV1Auth.POST("login", auth.Login)
 		}
 
-		//需要授权登录的路由
-		groupV1Auth := groupV1.Group("auth").Use(middleware.Auth())
+		//资源路由-不需登录
+		groupV1Slide := groupV1.Group("slide").Use(middleware.WithAccessToken())
 		{
-			groupV1Auth.GET("user", user.UserInfo)
+			groupV1Slide.GET("slide", slide.Slide)
+		}
+
+		//资源路由-需登录
+		groupV1User := groupV1.Group("user").Use(middleware.Auth())
+		{
+			groupV1User.GET("user", user.UserInfo)
 		}
 	}
 }

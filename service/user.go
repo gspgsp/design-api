@@ -15,7 +15,7 @@ type UserService struct {
  */
 func (u *UserService) UserInfo() (int, interface{}) {
 	user := models.User{}
-	err := common.Db.Where("id = " + u.UserId).Select("id", "name", "nickname", "avatar", "mobile", "email", "password").Find(&user).Error
+	err := common.Db.Where("id = " + u.UserId).Select("id", "name", "nickname", "avatar", "mobile", "email").Find(&user).Error
 	if err != nil {
 		return env.ACCOUNT_ERROR, user
 	}
