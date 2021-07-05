@@ -46,13 +46,6 @@ func Login(c *gin.Context) {
 	//	}
 	//}
 	//
-	////insert mongodb
-	//mgo := noSqlLog.NewMgo("login")
-
-	//res := mgo.InsertOne(bson.D{{"user", "1006"}, {"action", "login"}})
-	//
-	//log.Printf("mongodb 插入返回ID:%s", res.InsertedID)
-	////
 	//
 	////insert redis
 	//rd := noSqlLog.NewRd(7)

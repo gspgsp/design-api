@@ -2,7 +2,6 @@ package service
 
 import (
 	"design-api/util"
-	"log"
 	"design-api/common"
 	"time"
 	_ "github.com/aliyun/alibaba-cloud-sdk-go"
@@ -10,6 +9,8 @@ import (
 	_ "gopkg.in/ini.v1"
 	"design-api/config"
 	"github.com/pkg/errors"
+	mongo "design-api/common/log"
+	"go.mongodb.org/mongo-driver/bson"
 )
 
 var codeKey = "key-"
@@ -26,15 +27,17 @@ func (sms *SmsService) SendSmsCode(phone string) (string, error) {
 
 	code := randInt.Generate(sms.Len)
 	//阿里云短信
-	//err := aliSmsSend(phone, code)
-	//if err != nil {
-	//	return "", err
-	//}
+	err := aliSmsSend(phone, code)
+	if err != nil {
+		return "", err
+	}
 
 	codeKey += new(util.RandStr).Generate(10)
 	common.Cache.Set(codeKey, code, 5*time.Minute)
 
-	log.Println("code is:" + code + " codeKey is:" + codeKey)
+	mgo := mongo.NewMgo("sms")
+	mgo.InsertOne(bson.D{{"mobile", phone}, {"code", code}, {"codeKey", codeKey}})
+
 	return codeKey, nil
 }
 
@@ -54,7 +57,8 @@ func aliSmsSend(phone, code string) (error) {
 
 	response, err := client.SendSms(request)
 	if err != nil {
-		log.Printf("发送验证码失败:%s", err.Error())
+		mgo := mongo.NewMgo("sms")
+		mgo.InsertOne(bson.D{{"mobile", phone}, {"code", code}, {"sendErr", err.Error()}})
 		return err
 	}
 

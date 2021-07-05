@@ -25,14 +25,14 @@ func InitRouter(r *gin.Engine) {
 		//不需要登录的路由
 		groupV1NAuth := groupV1.Group("auth")
 		{
+			groupV1NAuth.POST("register", auth.Register)
 			groupV1NAuth.POST("login", auth.Login)
 		}
 
 		//需要授权登录的路由
-		groupV1Auth := groupV1.Group("auth")
+		groupV1Auth := groupV1.Group("auth").Use(middleware.Auth())
 		{
-			groupV1Auth.POST("register", auth.Register)
-			groupV1Auth.Use(middleware.Auth()).GET("user", user.UserInfo)
+			groupV1Auth.GET("user", user.UserInfo)
 		}
 	}
 }
