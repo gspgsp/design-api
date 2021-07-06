@@ -1,5 +1,6 @@
 package models
 
+//他、用户
 type User struct {
 	ID              *int64  `json:"id",gorm:"column:id;not null;primary_key;AUTO_INCREMENT;"`
 	Uuid            string  `json:"uuid",gorm:"uuid"`

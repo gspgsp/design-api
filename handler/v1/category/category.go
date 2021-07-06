@@ -1,17 +1,17 @@
-package slide
+package category
 
 import (
 	"github.com/gin-gonic/gin"
-	"design-api/service"
 	"design-api/common/env"
+	"design-api/service"
 	"design-api/common"
 )
 
 /**
-幻灯片
+分类列表
  */
-func Slide(c *gin.Context) {
-	code, slides := service.SlideList()
+func Category(c *gin.Context) {
+	code, categories := service.CategoryList()
 
 	if code != env.RESPONSE_SUCCESS {
 		common.Format(c).SetStatus(env.ERROR).SetCode(code).SetMessage(env.MsgFlags[code]).JsonResponse()
@@ -20,5 +20,5 @@ func Slide(c *gin.Context) {
 		return
 	}
 
-	common.Format(c).SetData(slides).JsonResponse()
+	common.Format(c).SetData(categories).JsonResponse()
 }
