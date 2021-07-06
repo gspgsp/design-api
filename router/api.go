@@ -9,6 +9,7 @@ import (
 	middleware "design-api/middleware/auth"
 	"design-api/handler/v1/slide"
 	"design-api/handler/v1/category"
+	"design-api/handler/v1/content"
 )
 
 /**
@@ -41,5 +42,6 @@ func InitRouter(r *gin.Engine) {
 		groupV1.GET("slide", slide.Slide)          //幻灯片
 		groupV1.GET("style", category.Style)       //风格列表
 		groupV1.GET("category", category.Category) //分类列表
+		groupV1.GET("content", content.List)       //内容列表
 	}
 }
