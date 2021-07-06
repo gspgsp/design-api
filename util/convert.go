@@ -32,7 +32,7 @@ func (s sortByBelong) Swap(i, j int) {
 }
 
 func (s sortByBelong) Less(i, j int) bool {
-	return s[i].Belong > s[j].Belong
+	return s[i].Belong < s[j].Belong
 }
 
 /**
@@ -45,7 +45,8 @@ func SplitSlice(list interface{}) interface{} {
 		v := list.([]models.Category)
 		sort.Sort(sortByBelong(v))
 
-		returnData := make([][]models.Category, 0)
+		//returnData := make([][]models.Category, 0)
+		returnData := make(map[string][]models.Category) //生成一个带key的map
 		i := 0
 		var j int
 		for {
@@ -56,7 +57,9 @@ func SplitSlice(list interface{}) interface{} {
 			for j = i + 1; j < len(v) && v[i].Belong == v [j].Belong; j++ {
 			}
 
-			returnData = append(returnData, v[i:j])
+			//returnData = append(returnData, v[i:j])
+			returnData[v[i].Belong] = v[i:j]
+
 			i = j
 		}
 
