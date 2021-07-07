@@ -12,11 +12,11 @@ type Content struct {
 	Description    string `json:"description,omitempty",gorm:"description"`
 	Carousel       string `json:"carousel,omitempty",gorm:"carousel"`
 	City           string `json:"city,omitempty",gorm:"city"`
-	Size           int    `json:"size,omitempty",gorm:"size"`
+	Size           int    `json:"size",gorm:"size"`
 	Status         int    `json:"status,omitempty",gorm:"status"`
 	CreatedAt      int64  `json:"created_at,omitempty",gorm:"created_at"`
 	UpdatedAt      int64  `json:"updated_at,omitempty",gorm:"updated_at"`
 	CreatedAdminId string `json:"created_admin_id,omitempty",gorm:"created_admin_id"`
 	UpdatedAdminId string `json:"updated_admin_id,omitempty",gorm:"updated_admin_id"`
-	CategoryName   string `json:"category_name,omitempty",gorm:"category_name"` //添加符合字段
+	CategoryName   string `json:"category_name,omitempty",gorm:"category_name"` //添加自定义字段
 }

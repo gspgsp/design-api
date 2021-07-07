@@ -6,16 +6,28 @@ import (
 	"design-api/common/env"
 	"strings"
 	"log"
+	"strconv"
 )
 
+//分页
+type Limit struct {
+	Page int
+	Size int
+}
+
+//筛选参数
 type FilterParam struct {
 	St    string
 	Sp    string
 	Si    string
 	Order string
+	Limit
 }
 
-func (f *FilterParam) ContentLIst() (int, interface{}) {
+/**
+内容列表
+ */
+func (f *FilterParam) ContentList() (int, interface{}) {
 
 	whereMul := ""
 	where := ""
@@ -47,7 +59,7 @@ func (f *FilterParam) ContentLIst() (int, interface{}) {
 		}
 	}
 
-	sql := "select c.id, c.uuid, c.title, c.sub_title, c.size, c.mb_cover_picture, GROUP_CONCAT(ca.name order by ca.name desc separator '|') as category_name from q_contents as c inner join q_content_category as cc on c.id = cc.content_id inner join q_categories as ca on ca.id = cc.category_id "
+	sql := "select c.id, c.uuid, c.title, c.sub_title, c.size, c.mb_cover_picture, group_concat((case when (ca.belong = 'style' or ca.belong = 'space') then ca.name else null end) order by ca.name desc separator '|') as category_name from q_contents as c inner join q_content_category as cc on c.id = cc.content_id inner join q_categories as ca on ca.id = cc.category_id "
 	if len(whereMul) > 0 {
 
 		index := strings.LastIndex(whereMul, "or")
@@ -72,7 +84,8 @@ func (f *FilterParam) ContentLIst() (int, interface{}) {
 		sql += order
 	}
 
-	log.Printf("sql is:%f\n", sql)
+	sql += " limit " + strconv.Itoa((f.Page-1)*f.Size) + "," + strconv.Itoa(f.Size)
+
 	contents := make([]models.Content, 0)
 	common.Db.Raw(sql).Scan(&contents)
 
