@@ -39,9 +39,10 @@ func InitRouter(r *gin.Engine) {
 		}
 
 		//资源路由-不需登录
-		groupV1.GET("slide", slide.Slide)          //幻灯片
-		groupV1.GET("style", category.Style)       //风格列表
-		groupV1.GET("category", category.Category) //分类列表
-		groupV1.GET("content", content.List)       //内容列表
+		groupV1.GET("slide", slide.Slide)                   //幻灯片
+		groupV1.GET("style", category.Style)                //风格列表
+		groupV1.GET("category", category.Category)          //分类列表
+		groupV1.GET("content", content.List)                //内容列表
+		groupV1.GET("content/detail/:uuid", content.Detail) //内容详情
 	}
 }

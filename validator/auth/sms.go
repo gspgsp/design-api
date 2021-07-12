@@ -13,13 +13,13 @@ type SmsParam struct {
 /**
 验证方法
  */
-func (s *SmsParam) ValidateParam() (int) {
+func (s *SmsParam) ValidateParam() (int, interface{}) {
 	validate := validator.New()
 
 	err := validate.Struct(s)
 	if err != nil {
-		return env.PARAM_REQUIRED
+		return env.PARAM_REQUIRED, nil
 	}
 
-	return env.RESPONSE_SUCCESS
+	return env.RESPONSE_SUCCESS, nil
 }

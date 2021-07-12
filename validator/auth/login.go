@@ -21,13 +21,13 @@ func (l *LoginParam) ParseParam(params map[string][]string) {
 	}
 }
 
-func (l *LoginParam) ValidateParam() (int) {
+func (l *LoginParam) ValidateParam() (int, interface{}) {
 	validate := validator.New()
 
 	err := validate.Struct(l)
 	if err != nil {
-		return env.PARAM_REQUIRED
+		return env.PARAM_REQUIRED, nil
 	}
 
-	return env.RESPONSE_SUCCESS
+	return env.RESPONSE_SUCCESS, nil
 }

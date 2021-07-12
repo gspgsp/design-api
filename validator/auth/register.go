@@ -34,17 +34,17 @@ func (r *RegisterParam) ParseParam(params map[string][]string) {
 /**
 验证POST参数
  */
-func (r *RegisterParam) ValidateParam() (int) {
+func (r *RegisterParam) ValidateParam() (int, interface{}) {
 	validate := validator.New()
 
 	validate.RegisterValidation("validateLength", ValidateLengthFunc)
 
 	err := validate.Struct(r)
 	if err != nil {
-		return env.PARAM_REQUIRED
+		return env.PARAM_REQUIRED, nil
 	}
 
-	return env.RESPONSE_SUCCESS
+	return env.RESPONSE_SUCCESS, nil
 }
 
 /**

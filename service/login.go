@@ -18,7 +18,7 @@ func Login(c *gin.Context) (int, models.User) {
 	loginParam.ParseParam(values)
 	var user models.User
 
-	if code := loginParam.ValidateParam(); code == env.RESPONSE_SUCCESS {
+	if code, _ := loginParam.ValidateParam(); code == env.RESPONSE_SUCCESS {
 		err := common.Db.Where("mobile = " + loginParam.Mobile).Select("id", "name", "nickname", "avatar", "mobile", "email", "password").Find(&user).Error
 		if err != nil {
 			return env.ACCOUNT_ERROR, user

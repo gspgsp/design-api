@@ -19,7 +19,7 @@ func Register(c *gin.Context) (int, int64) {
 	registerParam := &auth.RegisterParam{}
 	registerParam.ParseParam(values)
 
-	if code := registerParam.ValidateParam(); code == env.RESPONSE_SUCCESS {
+	if code, _ := registerParam.ValidateParam(); code == env.RESPONSE_SUCCESS {
 		smsCode, ok := common.Cache.Get(registerParam.CodeKey)
 		if !ok {
 			return env.SMS_CODE_EXPIRE_ERROR, 0

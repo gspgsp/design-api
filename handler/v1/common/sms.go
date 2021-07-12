@@ -18,7 +18,7 @@ var codeLength = 6
 func SendSms(c *gin.Context) {
 	mobile, _ := c.GetPostForm("mobile")
 	smsParam := &auth.SmsParam{Mobile: mobile}
-	if code := smsParam.ValidateParam(); code == env.RESPONSE_SUCCESS {
+	if code, _ := smsParam.ValidateParam(); code == env.RESPONSE_SUCCESS {
 		sms := &service.SmsService{Len: codeLength}
 		codeKey, err := sms.SendSmsCode(mobile)
 		if err != nil {
