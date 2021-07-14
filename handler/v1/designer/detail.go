@@ -1,23 +1,23 @@
-package content
+package designer
 
 import (
 	"github.com/gin-gonic/gin"
-	"design-api/common/env"
-	"design-api/model"
-	"design-api/validator/content"
 	"design-api/service"
+	"design-api/common/env"
+	"design-api/validator/designer"
+	"design-api/model"
 	"design-api/common"
 )
 
 /**
-内容详情
+设计师详情
  */
 func Detail(c *gin.Context) {
 
-	detailParam := content.DetailParam{c}
-	if code, content := detailParam.ValidateParam(); code == env.RESPONSE_SUCCESS {
+	detailParam := designer.DetailParam{c}
+	if code, designer := detailParam.ValidateParam(); code == env.RESPONSE_SUCCESS {
 
-		code, content = service.GetContentDetail(content.(models.Content).Uuid)
+		code, designer = service.GetDesignerDetail(designer.(models.Designer).Uuid)
 		if code != env.RESPONSE_SUCCESS {
 			common.Format(c).SetStatus(env.ERROR).SetCode(code).SetMessage(env.MsgFlags[code]).JsonResponse()
 
@@ -25,7 +25,7 @@ func Detail(c *gin.Context) {
 			return
 		}
 
-		common.Format(c).SetData(content).JsonResponse()
+		common.Format(c).SetData(designer).JsonResponse()
 	} else {
 		common.Format(c).SetStatus(env.ERROR).SetCode(env.ERROR).SetMessage(env.MsgFlags[env.ERROR]).JsonResponse()
 	}

@@ -18,6 +18,6 @@ type Content struct {
 	UpdatedAt      int64      `json:"updated_at,omitempty" gorm:"updated_at"`
 	CreatedAdminId string     `json:"created_admin_id,omitempty" gorm:"created_admin_id"`
 	UpdatedAdminId string     `json:"updated_admin_id,omitempty" gorm:"updated_admin_id"`
-	CategoryName   string     `json:"category_name,omitempty" gorm:"-"` //添加自定义字段
+	CategoryName   string     `json:"category_name,omitempty" gorm:"category_name"` //添加自定义字段
 	DesignerList   []Designer `json:"designer_list,omitempty" gorm:"-"`             //添加自定义字段
 }

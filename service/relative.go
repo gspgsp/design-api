@@ -31,6 +31,5 @@ func RelativeList(uuid interface{}) (int, interface{}) {
 		}
 	}
 
-	log.Printf("contents is:%f\v", contents)
 	return env.RESPONSE_FAIL, nil
 }

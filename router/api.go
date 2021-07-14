@@ -10,6 +10,7 @@ import (
 	"design-api/handler/v1/slide"
 	"design-api/handler/v1/category"
 	"design-api/handler/v1/content"
+	"design-api/handler/v1/designer"
 )
 
 /**
@@ -45,5 +46,6 @@ func InitRouter(r *gin.Engine) {
 		groupV1.GET("content", content.List)                    //内容列表
 		groupV1.GET("content/detail/:uuid", content.Detail)     //内容详情
 		groupV1.GET("content/relative/:uuid", content.Relative) //相关列表
+		groupV1.GET("designer/detail/:uuid", designer.Detail)   //设计师详情
 	}
 }

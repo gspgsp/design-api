@@ -9,7 +9,7 @@ import (
 /**
 内容详情
  */
-func Detail(uuid string) (int, interface{}) {
+func GetContentDetail(uuid string) (int, interface{}) {
 	sql := "select c.id, c.uuid, c.title, c.sub_title, c.search_count, c.description, c.carousel, c.city, c.size, group_concat((case when (ca.belong = 'style' or ca.belong = 'space') then ca.name else null end) order by ca.name desc separator '|') as category_name from q_contents as c inner join q_content_category as cc on c.id = cc.content_id inner join q_categories as ca on ca.id = cc.category_id where c.uuid = " + `'` + uuid + `'`
 
 	content := models.Content{}
