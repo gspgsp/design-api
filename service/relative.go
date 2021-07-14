@@ -4,7 +4,6 @@ import (
 	"design-api/common"
 	"design-api/model"
 	"design-api/common/env"
-	"log"
 )
 
 const (
