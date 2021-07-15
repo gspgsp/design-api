@@ -37,6 +37,7 @@ func InitRouter(r *gin.Engine) {
 		groupV1User := groupV1.Group("user").Use(middleware.Auth())
 		{
 			groupV1User.GET("user", user.UserInfo) //用户信息
+			groupV1User.POST("quote", user.Quote)  //报价
 		}
 
 		//资源路由-不需登录

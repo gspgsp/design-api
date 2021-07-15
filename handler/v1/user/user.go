@@ -8,11 +8,14 @@ import (
 	"design-api/util"
 )
 
-func UserInfo(c *gin.Context)  {
+/**
+用户信息
+ */
+func UserInfo(c *gin.Context) {
 	userId, _ := c.Get("userId")
 
 	user_id := util.Strval(userId)
-	userService := service.UserService{UserId:user_id}
+	userService := service.UserService{UserId: user_id}
 	code, user := userService.UserInfo()
 	//
 	if code != env.RESPONSE_SUCCESS {
