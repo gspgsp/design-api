@@ -1,10 +1,10 @@
 package user
 
 import (
-	"github.com/gin-gonic/gin"
-	"design-api/model"
 	"design-api/common/env"
-	_ "design-api/validator"
+	"design-api/model"
+	"github.com/gin-gonic/gin"
+	//_ "design-api/validator"
 )
 
 //报价验证参数
