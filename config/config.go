@@ -35,6 +35,7 @@ type configuration struct {
 	Addr    addr    `json:"addr",yaml:"addr"`
 	Mongodb mongodb `json:"mongodb",yaml:"mongodb"`
 	Sms     sms     `json:"sms",yaml:"sms"`
+	QiNiu   qiniu   `json:"qi_niu",yaml:"qi_niu"`
 }
 
 func (conf *configuration) yaml(dir string) (*configuration, error) {
@@ -95,4 +96,10 @@ type sms struct {
 	AccessKeySecret string `yaml:"access_key_secret",json:"access_key_secret"`
 	SignName        string `yaml:"sign_name",json:"sign_name"`
 	TemplateCode    string `yaml:"template_code",json:"template_code"`
+}
+
+type qiniu struct {
+	AccessKey string `yaml:"access_key",json:"access_key"`
+	SecretKey string `yaml:"secret_key",json:"secret_key"`
+	Bucket    string `yaml:"bucket",json:"bucket"`
 }

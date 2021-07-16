@@ -27,3 +27,7 @@ sms:
   access_key_secret: xxx
   sign_name: xxx
   template_code: xxx
+qiniu:
+  access_key: xxx
+  secret_key: xxx
+  bucket: xxx

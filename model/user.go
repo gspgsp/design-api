@@ -4,9 +4,9 @@ package models
 type User struct {
 	ID              *int64  `json:"id",gorm:"column:id;not null;primary_key;AUTO_INCREMENT;"`
 	Uuid            string  `json:"uuid,omitempty",gorm:"uuid"`
-	Name            string  `json:"name,omitempty",gorm:"name"`
-	Nickname        string  `json:"nickname,omitempty",gorm:"nickname"`
-	Avatar          string  `json:"avatar,omitempty",gorm:"avatar"`
+	Name            string  `json:"name",gorm:"name"`
+	Nickname        string  `json:"nickname",gorm:"nickname"`
+	Avatar          string  `json:"avatar",gorm:"avatar"`
 	Mobile          string  `json:"mobile,omitempty",gorm:"mobile"`
 	Password        string  `json:"password,omitempty",gorm:"password"`
 	Email           string  `json:"email,omitempty",gorm:"email"`

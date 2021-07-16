@@ -1,22 +1,20 @@
 package common
 
-//import (
-//	"github.com/gin-gonic/gin"
-//	"github.com/qiniu/go-sdk/auth/qbox"
-//	"github.com/qiniu/go-sdk/storage"
-//	"design-api/common"
-//)
-//
-//func Upload(c *gin.Context) {
-//	accessKey := "BtTK6_zEwlHRbZwFOJQ9yGfSzhIkOTVeKfkS-2oM"
-//	secretKey := "KPIY6tgA3Ankt2-j3S2IMUbo81Ou7G4WV9J_4CjM"
-//
-//	bucket := "dsss"
-//	putPolicy := storage.PutPolicy{
-//		Scope: bucket,
-//	}
-//	mac := qbox.NewMac(accessKey, secretKey)
-//	upToken := putPolicy.UploadToken(mac)
-//
-//	common.Format(c).SetData(upToken).JsonResponse()
-//}
+import (
+	"design-api/common"
+	"design-api/config"
+	"github.com/gin-gonic/gin"
+	"github.com/qiniu/go-sdk/v7/auth/qbox"
+	"github.com/qiniu/go-sdk/v7/storage"
+)
+
+// Upload /**上传token
+func Upload(c *gin.Context) {
+	putPolicy := storage.PutPolicy{
+		Scope: config.Config.QiNiu.Bucket,
+	}
+	mac := qbox.NewMac(config.Config.QiNiu.AccessKey, config.Config.QiNiu.SecretKey)
+	upToken := putPolicy.UploadToken(mac)
+
+	common.Format(c).SetData(upToken).JsonResponse()
+}

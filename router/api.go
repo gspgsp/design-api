@@ -1,21 +1,21 @@
 package router
 
 import (
-	"github.com/gin-gonic/gin"
 	"design-api/handler/v1/auth"
+	"github.com/gin-gonic/gin"
 
-	"design-api/handler/v1/common"
-	"design-api/handler/v1/user"
-	middleware "design-api/middleware/auth"
-	"design-api/handler/v1/slide"
 	"design-api/handler/v1/category"
+	"design-api/handler/v1/common"
 	"design-api/handler/v1/content"
 	"design-api/handler/v1/designer"
+	"design-api/handler/v1/slide"
+	"design-api/handler/v1/user"
+	middleware "design-api/middleware/auth"
 )
 
 /**
 初始化路由
- */
+*/
 func InitRouter(r *gin.Engine) {
 	//v1
 	groupV1 := r.Group("v1")
@@ -24,7 +24,7 @@ func InitRouter(r *gin.Engine) {
 		groupCommon := groupV1.Group("common")
 		{
 			groupCommon.POST("sms", common.SendSms)   //发短信
-			//groupCommon.POST("upload", common.Upload) //上传
+			groupCommon.POST("upload", common.Upload) //上传token
 		}
 
 		//用户登录注册路由
@@ -37,8 +37,12 @@ func InitRouter(r *gin.Engine) {
 		//资源路由-需登录
 		groupV1User := groupV1.Group("user").Use(middleware.Auth())
 		{
-			groupV1User.GET("user", user.UserInfo) //用户信息
-			groupV1User.POST("quote", user.Quote)  //报价
+			groupV1User.GET("user", user.UserInfo)          //用户信息
+			groupV1User.POST("quote", user.Quote)           //报价
+			groupV1User.POST("update", user.UpdateUserInfo) //更新用户信息
+			groupV1User.GET("quotes", user.UserQuotes)      //用户报价信息
+			groupV1User.GET("favors", user.UserFavors)      //用户收藏信息
+			groupV1User.GET("stars", user.UserStars)        //用户关注信息
 		}
 
 		//资源路由-不需登录
