@@ -1,12 +1,13 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-	"design-api/router"
-	"design-api/config"
-	"runtime"
-	"log"
 	_ "design-api/common/log"
+	"design-api/config"
+	"design-api/router"
+	"github.com/gin-gonic/gin"
+	"log"
+	"runtime"
+	"syscall"
 )
 
 var sysType string
@@ -20,6 +21,7 @@ func main() {
 	sysType = runtime.GOOS
 
 	if sysType == "linux" {
+		syscall.Unlink(config.Config.Addr.Unix)
 		if err := r.RunUnix(config.Config.Addr.Unix); err != nil {
 			log.Println("监听出错了:" + err.Error())
 		}
