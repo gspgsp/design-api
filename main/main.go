@@ -7,7 +7,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"log"
 	"runtime"
-	"syscall"
 )
 
 var sysType string
@@ -21,7 +20,7 @@ func main() {
 	sysType = runtime.GOOS
 
 	if sysType == "linux" {
-		syscall.Unlink(config.Config.Addr.Unix)
+		//syscall.Unlink(config.Config.Addr.Unix)
 		if err := r.RunUnix(config.Config.Addr.Unix); err != nil {
 			log.Println("监听出错了:" + err.Error())
 		}
