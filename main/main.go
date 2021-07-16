@@ -6,7 +6,6 @@ import (
 	"design-api/router"
 	"github.com/gin-gonic/gin"
 	"log"
-	"os"
 	"runtime"
 	"syscall"
 )
@@ -23,9 +22,11 @@ func main() {
 
 	if sysType == "linux" {
 		syscall.Unlink(config.Config.Addr.Unix)
-		if err := r.RunUnix(config.Config.Addr.Unix); err != nil {
-			os.Chmod(config.Config.Addr.Unix, 0777)
+		err := r.RunUnix(config.Config.Addr.Unix)
+		if err != nil {
 			log.Println("监听出错了:" + err.Error())
+		} else {
+			syscall.Chmod(config.Config.Addr.Unix, 0777)
 		}
 	} else if sysType == "windows" {
 		if err := r.Run(config.Config.Addr.Tcp); err != nil {
