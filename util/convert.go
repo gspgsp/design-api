@@ -1,14 +1,15 @@
 package util
 
 import (
-	"reflect"
 	"design-api/model"
+	"encoding/json"
+	"reflect"
 	"sort"
 )
 
 /**
 struct转map
- */
+*/
 func StructToMap(obj interface{}) map[string]interface{} {
 	obj1 := reflect.TypeOf(obj)
 	obj2 := reflect.ValueOf(obj)
@@ -37,7 +38,7 @@ func (s sortByBelong) Less(i, j int) bool {
 
 /**
 切片或数组按照指定字段分组排序，必须实现sort的三个方法，这其实是一个冒泡排序
- */
+*/
 func SplitSlice(list interface{}) interface{} {
 
 	switch list.(type) {
@@ -54,7 +55,7 @@ func SplitSlice(list interface{}) interface{} {
 				break
 			}
 
-			for j = i + 1; j < len(v) && v[i].Belong == v [j].Belong; j++ {
+			for j = i + 1; j < len(v) && v[i].Belong == v[j].Belong; j++ {
 			}
 
 			//returnData = append(returnData, v[i:j])
@@ -67,4 +68,17 @@ func SplitSlice(list interface{}) interface{} {
 	default:
 		return nil
 	}
+}
+
+/**
+json转map
+ */
+func JsonToMap(jsonStr string) (map[string]interface{}, error) {
+	var mapResult map[string]interface{}
+	err := json.Unmarshal([]byte(jsonStr), &mapResult)
+	if err != nil {
+		return nil, err
+	}
+
+	return mapResult, nil
 }

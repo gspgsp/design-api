@@ -10,13 +10,13 @@ type LoginParam struct {
 	Password string `validate:"required"`
 }
 
-func (l *LoginParam) ParseParam(params map[string][]string) {
+func (l *LoginParam) ParseParam(params map[string]interface{}) {
 
 	for i, val := range params {
 		if i == "mobile" {
-			l.Mobile = val[0]
+			l.Mobile = val.(string)
 		} else if i == "password" {
-			l.Password = val[0]
+			l.Password = val.(string)
 		}
 	}
 }

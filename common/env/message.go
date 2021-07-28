@@ -5,6 +5,7 @@ var MsgFlags = map[int]string{
 	ERROR:          "fail",
 	INVALID_PARAMS: "请求参数错误",
 	NO_AUTHED:      "请先授权登录",
+	INVALID_METHOD: "非法请求方式",
 
 	RESPONSE_SUCCESS: "请求成功",
 	RESPONSE_FAIL:    "请求失败",
