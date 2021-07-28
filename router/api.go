@@ -32,6 +32,7 @@ func InitRouter(r *gin.Engine) {
 		{
 			groupV1Auth.POST("register", auth.Register) //注册
 			groupV1Auth.POST("login", auth.Login)       //登录
+			groupV1Auth.GET("refresh", auth.Refresh)    //刷新token
 		}
 
 		//资源路由-需登录

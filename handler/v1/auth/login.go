@@ -8,6 +8,7 @@ import (
 	"design-api/util"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson"
+	"log"
 )
 
 // Login /**登录
@@ -32,4 +33,21 @@ func Login(c *gin.Context) {
 	////
 	//
 	//common.Format(c).SetData(slides).JsonResponse()
+}
+
+/**
+刷新token
+ */
+func Refresh(c *gin.Context) {
+	refreshToken, _ := c.Get("refresh_token")
+
+	log.Println("refreshToken is:", refreshToken)
+
+	token, code := util.RefreshToken(refreshToken.(string))
+
+	if code != env.RESPONSE_SUCCESS {
+		common.Format(c).SetStatus(env.ERROR).SetCode(code).SetMessage(env.MsgFlags[code]).JsonResponse()
+	} else {
+		common.Format(c).SetData(map[string]string{"token_type": "Bearer", "access_token": token}).JsonResponse()
+	}
 }
