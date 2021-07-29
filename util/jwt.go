@@ -1,10 +1,10 @@
 package util
 
 import (
-	_ "github.com/dgrijalva/jwt-go"
-	"github.com/dgrijalva/jwt-go"
-	"time"
 	"design-api/common/env"
+	"github.com/dgrijalva/jwt-go"
+	_ "github.com/dgrijalva/jwt-go"
+	"time"
 )
 
 var jwtSecret = []byte("design")
@@ -89,5 +89,5 @@ func RefreshToken(token string) (string, int) {
 		return "", env.ERROR_AUTH_TOKEN
 	}
 
-	return newToken, env.SUCCESS
+	return newToken, env.RESPONSE_SUCCESS
 }
