@@ -40,7 +40,7 @@ func GenerateToken(id int64) (interface{}, int) {
 	}
 
 	tokenMap["access_token"] = signedToken
-	tokenMap["expire_at"] = claims.ExpiresAt
+	tokenMap["expire_at"] = strconv.FormatInt(claims.ExpiresAt, 10)
 
 	return tokenMap, env.RESPONSE_SUCCESS
 }
