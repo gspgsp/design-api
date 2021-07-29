@@ -1,11 +1,11 @@
 package auth
 
 import (
-	"github.com/gin-gonic/gin"
-	"design-api/service"
-	"design-api/common/env"
 	"design-api/common"
+	"design-api/common/env"
+	"design-api/service"
 	"design-api/util"
+	"github.com/gin-gonic/gin"
 )
 
 /**
@@ -24,5 +24,5 @@ func Register(c *gin.Context) {
 	}
 
 	token, _ := util.GenerateToken(userId)
-	common.Format(c).SetData(map[string]string{"token_type": "Bearer", "access_token": token}).JsonResponse()
+	common.Format(c).SetData(map[string]string{"token_type": "Bearer", "access_token": token.(map[string]interface{})["access_token"].(string), "expire_at":token.(map[string]interface{})["expire_at"].(string)}).JsonResponse()
 }

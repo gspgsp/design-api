@@ -4,6 +4,7 @@ import (
 	"design-api/common/env"
 	"github.com/dgrijalva/jwt-go"
 	_ "github.com/dgrijalva/jwt-go"
+	"strconv"
 	"time"
 )
 
@@ -18,8 +19,8 @@ type Claims struct {
 
 /**
 生成token
- */
-func GenerateToken(id int64) (string, int) {
+*/
+func GenerateToken(id int64) (interface{}, int) {
 	expireTime := time.Now().Add(EXPIRE_TIME)
 	claims := Claims{
 		id,
@@ -29,6 +30,8 @@ func GenerateToken(id int64) (string, int) {
 		},
 	}
 
+	tokenMap := make(map[string]interface{})
+
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	signedToken, err := token.SignedString(jwtSecret)
 
@@ -36,12 +39,15 @@ func GenerateToken(id int64) (string, int) {
 		return "", env.ERROR_AUTH_TOKEN
 	}
 
-	return signedToken, env.RESPONSE_SUCCESS
+	tokenMap["access_token"] = signedToken
+	tokenMap["expire_at"] = claims.ExpiresAt
+
+	return tokenMap, env.RESPONSE_SUCCESS
 }
 
 /**
 解析token
- */
+*/
 func ParseToken(token string) (*Claims, int) {
 	tokenClaims, err := jwt.ParseWithClaims(token, &Claims{}, func(token *jwt.Token) (interface{}, error) {
 		return jwtSecret, nil
@@ -71,12 +77,14 @@ func ParseToken(token string) (*Claims, int) {
 
 /**
 刷新token
- */
-func RefreshToken(token string) (string, int) {
+*/
+func RefreshToken(token string) (interface{}, int) {
 	claims, code := ParseToken(token)
 
+	tokenMap := make(map[string]interface{})
+
 	if code != env.SUCCESS {
-		return "", code
+		return tokenMap, code
 	}
 
 	claims.ExpiresAt = time.Now().Unix() + (claims.ExpiresAt - claims.IssuedAt)
@@ -86,8 +94,11 @@ func RefreshToken(token string) (string, int) {
 	refToken := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	newToken, err := refToken.SignedString(jwtSecret)
 	if err != nil {
-		return "", env.ERROR_AUTH_TOKEN
+		return tokenMap, env.ERROR_AUTH_TOKEN
 	}
 
-	return newToken, env.RESPONSE_SUCCESS
+	tokenMap["access_token"] = newToken
+	tokenMap["expire_at"] = strconv.FormatInt(claims.ExpiresAt, 10)
+
+	return tokenMap, env.RESPONSE_SUCCESS
 }

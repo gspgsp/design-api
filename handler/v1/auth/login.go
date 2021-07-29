@@ -21,9 +21,9 @@ func Login(c *gin.Context) {
 		token, _ := util.GenerateToken(*user.ID)
 
 		mgo := mongo.NewMgo("login")
-		mgo.InsertOne(bson.D{{"user", user.ID}, {"token", token}})
+		mgo.InsertOne(bson.D{{"user", user.ID}, {"token", token.(map[string]interface{})["access_token"]}})
 
-		common.Format(c).SetData(map[string]string{"token_type": "Bearer", "access_token": token}).JsonResponse()
+		common.Format(c).SetData(map[string]string{"token_type": "Bearer", "access_token": token.(map[string]interface{})["access_token"].(string), "expire_at":token.(map[string]interface{})["expire_at"].(string)}).JsonResponse()
 	}
 
 	////insert redis
@@ -44,6 +44,6 @@ func Refresh(c *gin.Context) {
 	if code != env.RESPONSE_SUCCESS {
 		common.Format(c).SetStatus(env.ERROR).SetCode(code).SetMessage(env.MsgFlags[code]).JsonResponse()
 	} else {
-		common.Format(c).SetData(map[string]string{"token_type": "Bearer", "access_token": token}).JsonResponse()
+		common.Format(c).SetData(map[string]string{"token_type": "Bearer", "access_token": token.(map[string]interface{})["access_token"].(string), "expire_at":token.(map[string]interface{})["expire_at"].(string)}).JsonResponse()
 	}
 }
