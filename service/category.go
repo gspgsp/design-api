@@ -1,9 +1,9 @@
 package service
 
 import (
+	"design-api/common"
 	"design-api/common/env"
 	"design-api/model"
-	"design-api/common"
 	"design-api/util"
 )
 
@@ -12,7 +12,7 @@ import (
  */
 func StyleList() (int, interface{}) {
 	w := "belong = 'style' and status = 1"
-	s := "id,name,mb_cover_picture"
+	s := "id,belong,name,mb_cover_picture"
 	code, data := category(w, s)
 
 	return code, data
