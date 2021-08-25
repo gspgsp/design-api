@@ -10,7 +10,7 @@ import (
 )
 
 func Login(c *gin.Context) (int, models.User) {
-	//postman可以传from，也可以传json，对于php来讲 框架都可以解析，但是gin的话，必须区别对待.直接form是获取不到参数的
+	//postman可以传form，也可以传json，对于php来讲 框架都可以解析，但是gin的话，必须区别对待.直接form是获取不到参数的
 	//c.Request.ParseForm()
 	//values := c.Request.PostForm
 	var user models.User
