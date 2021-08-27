@@ -1,16 +1,17 @@
 package service
 
 import (
-	"design-api/util"
 	"design-api/common"
-	"time"
+	mongo "design-api/common/log"
+	"design-api/config"
+	"design-api/util"
 	_ "github.com/aliyun/alibaba-cloud-sdk-go"
 	"github.com/aliyun/alibaba-cloud-sdk-go/services/dysmsapi"
-	_ "gopkg.in/ini.v1"
-	"design-api/config"
 	"github.com/pkg/errors"
-	mongo "design-api/common/log"
 	"go.mongodb.org/mongo-driver/bson"
+	_ "gopkg.in/ini.v1"
+	"log"
+	"time"
 )
 
 var codeKey = "key-"
@@ -21,7 +22,7 @@ type SmsService struct {
 
 /**
 发送短信服务
- */
+*/
 func (sms *SmsService) SendSmsCode(phone string) (string, error) {
 	randInt := new(util.RandInt)
 
@@ -35,16 +36,24 @@ func (sms *SmsService) SendSmsCode(phone string) (string, error) {
 	codeKey += new(util.RandStr).Generate(10)
 	common.Cache.Set(codeKey, code, 5*time.Minute)
 
-	mgo := mongo.NewMgo("sms")
-	mgo.InsertOne(bson.D{{"mobile", phone}, {"code", code}, {"codeKey", codeKey}})
+	mgo := mongo.NewMgo("sms_code")
+
+	var d mongo.SmsMongoInfo
+	mgo.GetOne(bson.M{"mobile": phone}, &d)
+	if len(d.Mobile) > 0 {
+		log.Printf("111232")
+		mgo.UpdateOne(d, bson.D{{"mobile", phone}, {"code", code}, {"codeKey", codeKey}})
+	} else {
+		mgo.InsertOne(bson.D{{"mobile", phone}, {"code", code}, {"codeKey", codeKey}})
+	}
 
 	return codeKey, nil
 }
 
 /**
 阿里短信
- */
-func aliSmsSend(phone, code string) (error) {
+*/
+func aliSmsSend(phone, code string) error {
 	client, err := dysmsapi.NewClientWithAccessKey(config.Config.Sms.RegionId, config.Config.Sms.AccessKeyId, config.Config.Sms.AccessKeySecret)
 
 	request := dysmsapi.CreateSendSmsRequest()
@@ -57,7 +66,7 @@ func aliSmsSend(phone, code string) (error) {
 
 	response, err := client.SendSms(request)
 	if err != nil {
-		mgo := mongo.NewMgo("sms")
+		mgo := mongo.NewMgo("sms_log")
 		mgo.InsertOne(bson.D{{"mobile", phone}, {"code", code}, {"sendErr", err.Error()}})
 		return err
 	}

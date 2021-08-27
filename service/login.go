@@ -3,10 +3,13 @@ package service
 import (
 	"design-api/common"
 	"design-api/common/env"
+	mongo "design-api/common/log"
 	"design-api/model"
 	"design-api/util"
 	"design-api/validator/auth"
 	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/bson"
+	"log"
 )
 
 func Login(c *gin.Context) (int, models.User) {
@@ -31,9 +34,17 @@ func Login(c *gin.Context) (int, models.User) {
 				return env.ACCOUNT_ERROR, user
 			}
 
-			err = util.PasswordCheck([]byte(user.Password), []byte(loginParam.Password))
-			if err != nil {
-				return env.ACCOUNT_ERROR, user
+			if loginParam.OperateType == 1 {
+				err = util.PasswordCheck([]byte(user.Password), []byte(loginParam.Password))
+				if err != nil {
+					return env.ACCOUNT_ERROR, user
+				}
+			} else if loginParam.OperateType == 2 {
+				//
+				var d mongo.SmsMongoInfo
+				mongo.NewMgo("sms_code").GetOne(bson.M{"mobile": "15122801645"}, &d)
+
+				log.Printf("d is:%v", d)
 			}
 
 			return env.RESPONSE_SUCCESS, user
