@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"design-api/common"
 	mongo "design-api/common/log"
 	"design-api/config"
 	"design-api/util"
@@ -34,7 +33,8 @@ func (sms *SmsService) SendSmsCode(phone string) (string, error) {
 	}
 
 	codeKey += new(util.RandStr).Generate(10)
-	common.Cache.Set(codeKey, code, 5*time.Minute)
+	//取消使用go 自带的cache
+	//common.Cache.Set(codeKey, code, 5*time.Minute)
 
 	mgo := mongo.NewMgo("sms_code")
 
@@ -43,7 +43,7 @@ func (sms *SmsService) SendSmsCode(phone string) (string, error) {
 	expireAt := time.Now().Unix() + 120
 
 	if len(d.Mobile) > 0 {
-		mongo.NewMgo("sms_code").GetCollection().UpdateOne(context.Background(), bson.M{"mobile": phone}, bson.M{"$set": bson.M{"code": code, "codeKey": codeKey, "expireAt":expireAt}})
+		mongo.NewMgo("sms_code").GetCollection().UpdateOne(context.Background(), bson.M{"mobile": phone}, bson.M{"$set": bson.M{"code": code, "codeKey": codeKey, "expireAt": expireAt}})
 	} else {
 		mgo.InsertOne(bson.D{{"mobile", phone}, {"code", code}, {"codeKey", codeKey}, {"expireAt", expireAt}})
 	}

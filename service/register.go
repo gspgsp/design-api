@@ -1,15 +1,17 @@
 package service
 
 import (
-	"design-api/validator/auth"
-	"design-api/common/env"
 	"design-api/common"
+	"design-api/common/env"
+	mongo "design-api/common/log"
 	"design-api/model"
 	"design-api/util"
-	uuid2 "github.com/satori/go.uuid"
+	"design-api/validator/auth"
 	"fmt"
-	"time"
 	"github.com/gin-gonic/gin"
+	uuid2 "github.com/satori/go.uuid"
+	"go.mongodb.org/mongo-driver/bson"
+	"time"
 )
 
 func Register(c *gin.Context) (int, int64) {
@@ -20,13 +22,26 @@ func Register(c *gin.Context) (int, int64) {
 	registerParam.ParseParam(values)
 
 	if code, _ := registerParam.ValidateParam(); code == env.RESPONSE_SUCCESS {
-		smsCode, ok := common.Cache.Get(registerParam.CodeKey)
-		if !ok {
+
+		var d mongo.SmsMongoInfo
+		mongo.NewMgo("sms_code").GetOne(bson.M{"codeKey": registerParam.CodeKey}, &d)
+
+		//取消使用go 自带的cache
+		//smsCode, ok := common.Cache.Get(registerParam.CodeKey)
+		if (d == mongo.SmsMongoInfo{}) {
+			return env.SMS_CODE_KEY_INVALID, 0
+		}
+
+		if d.ExpireAt < time.Now().Unix() {
 			return env.SMS_CODE_EXPIRE_ERROR, 0
 		}
 
-		if smsCode != registerParam.Code {
+		if d.Code != registerParam.Code {
 			return env.SMS_CODE_VERIFY_ERROR, 0
+		}
+
+		if d.Mobile != registerParam.Mobile {
+			return env.SMS_CODE_INVALID_MOBILE, 0
 		}
 
 		//TODO::注册业务 要不要 DAO 层?

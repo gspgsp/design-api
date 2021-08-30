@@ -17,17 +17,15 @@ var MsgFlags = map[int]string{
 
 	PARAM_REQUIRED: "参数必须",
 
-	SMS_CODE_SEND_ERROR:   "验证码发送失败",
-	SMS_CODE_VERIFY_ERROR: "验证码验证错误",
-	SMS_CODE_EXPIRE_ERROR: "验证码已过期",
+	SMS_CODE_SEND_ERROR:     "验证码发送失败",
+	SMS_CODE_VERIFY_ERROR:   "验证码验证错误",
+	SMS_CODE_EXPIRE_ERROR:   "验证码已过期",
+	SMS_CODE_KEY_INVALID:    "验证码Key无效",
+	SMS_CODE_INVALID_MOBILE: "手机号码无效",
 
 	DB_INSERT_ERROR: "数据插入错误",
 
 	ACCOUNT_ERROR: "账号或密码错误",
-
-	CODE_EXPIRED:     "验证码已失效",
-	CODE_INVALID:     "验证码无效",
-	CODE_KEY_INVALID: "验证码Key无效",
 
 	DATABASE_OPERATE_ERROR: "数据库操作失败",
 }

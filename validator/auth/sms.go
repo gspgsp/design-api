@@ -1,8 +1,8 @@
 package auth
 
 import (
-	"github.com/go-playground/validator"
 	"design-api/common/env"
+	"github.com/go-playground/validator"
 )
 
 //发短信验证参数
@@ -12,7 +12,7 @@ type SmsParam struct {
 
 /**
 验证方法
- */
+*/
 func (s *SmsParam) ValidateParam() (int, interface{}) {
 	validate := validator.New()
 

@@ -1,8 +1,8 @@
 package auth
 
 import (
-	"github.com/go-playground/validator"
 	"design-api/common/env"
+	"github.com/go-playground/validator"
 )
 
 //注册证参数
@@ -15,7 +15,7 @@ type RegisterParam struct {
 
 /**
 解析POST参数
- */
+*/
 func (r *RegisterParam) ParseParam(params map[string][]string) {
 
 	for i, val := range params {
@@ -33,7 +33,7 @@ func (r *RegisterParam) ParseParam(params map[string][]string) {
 
 /**
 验证POST参数
- */
+*/
 func (r *RegisterParam) ValidateParam() (int, interface{}) {
 	validate := validator.New()
 
@@ -49,7 +49,7 @@ func (r *RegisterParam) ValidateParam() (int, interface{}) {
 
 /**
 自定义验证方法 | 验证字符串长度
- */
+*/
 func ValidateLengthFunc(field validator.FieldLevel) bool {
 	codeLen := len(field.Field().String())
 	if codeLen < 6 || codeLen > 20 {

@@ -11,6 +11,7 @@ import (
 	"github.com/gin-gonic/gin"
 	uuid2 "github.com/satori/go.uuid"
 	"go.mongodb.org/mongo-driver/bson"
+	"log"
 	"time"
 )
 
@@ -48,16 +49,22 @@ func Login(c *gin.Context) (int, models.User) {
 				var d mongo.SmsMongoInfo
 				mongo.NewMgo("sms_code").GetOne(bson.M{"mobile": user.Mobile}, &d)
 				if d.Code != loginParam.Code {
-					return env.CODE_INVALID, user
+					return env.SMS_CODE_VERIFY_ERROR, user
 				}
 
 				if d.CodeKey != loginParam.CodeKey {
-					return env.CODE_KEY_INVALID, user
+					return env.SMS_CODE_KEY_INVALID, user
 				}
 
-				expireAt := time.Now().Unix()
-				if d.ExpireAt < expireAt {
-					return env.CODE_EXPIRED, user
+				if d.ExpireAt < time.Now().Unix() {
+
+					log.Printf("tt is:%v", time.Now().Unix() + 3600)
+
+					return env.SMS_CODE_EXPIRE_ERROR, user
+				}
+
+				if d.Mobile != loginParam.Mobile {
+					return env.SMS_CODE_INVALID_MOBILE, user
 				}
 
 				if (user == models.User{}) {
