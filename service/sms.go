@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"design-api/common"
 	mongo "design-api/common/log"
 	"design-api/config"
@@ -10,7 +11,6 @@ import (
 	"github.com/pkg/errors"
 	"go.mongodb.org/mongo-driver/bson"
 	_ "gopkg.in/ini.v1"
-	"log"
 	"time"
 )
 
@@ -41,8 +41,7 @@ func (sms *SmsService) SendSmsCode(phone string) (string, error) {
 	var d mongo.SmsMongoInfo
 	mgo.GetOne(bson.M{"mobile": phone}, &d)
 	if len(d.Mobile) > 0 {
-		log.Printf("111232")
-		mgo.UpdateOne(d, bson.D{{"mobile", phone}, {"code", code}, {"codeKey", codeKey}})
+		mongo.NewMgo("sms_code").GetCollection().UpdateOne(context.Background(), bson.M{"mobile": phone}, bson.M{"$set": bson.M{"code": code, "codeKey": codeKey}})
 	} else {
 		mgo.InsertOne(bson.D{{"mobile", phone}, {"code", code}, {"codeKey", codeKey}})
 	}

@@ -21,15 +21,14 @@ type SmsMongoInfo struct {
 	CodeKey string
 }
 
+// NewMgo /**
 func NewMgo(collection string) *mgo {
 	return &mgo{config.Config.Mongodb.MongodbDatabase, collection}
 }
 
+// InsertOne /**
 func (m *mgo) InsertOne(value interface{}) *mongo.InsertOneResult {
-	client := Db.Mongo
-
-	collection := client.Database(m.database).Collection(m.collection)
-	insertResult, err := collection.InsertOne(context.TODO(), value)
+	insertResult, err := m.GetCollection().InsertOne(context.TODO(), value)
 
 	if err != nil {
 		log.Fatalln("mongodb 插入数据错误:" + err.Error())
@@ -38,21 +37,24 @@ func (m *mgo) InsertOne(value interface{}) *mongo.InsertOneResult {
 	return insertResult
 }
 
+// GetOne /**
 func (m *mgo) GetOne(value interface{}, data interface{}) {
 	client := Db.Mongo
 
 	collection := client.Database(m.database).Collection(m.collection)
 	err := collection.FindOne(context.Background(), value).Decode(data)
 	if err != nil {
-		client.Database(m.database).Collection("sms_log").InsertOne(context.TODO(), bson.D{{"findDataErr", err.Error()}})
+		m.collection = "sms_log"
+		m.GetCollection().InsertOne(context.TODO(), bson.D{{"findDataErr", err.Error()}})
 	}
 }
 
-func (m *mgo) UpdateOne(value interface{}, new interface{}) {
+// 更新的 没有弄，直接调用
+
+// GetCollection /**
+func (m *mgo) GetCollection() *mongo.Collection {
 	client := Db.Mongo
 	collection := client.Database(m.database).Collection(m.collection)
-	n, ok := new.(SmsMongoInfo)
-	if ok {
-		collection.UpdateOne(context.Background(), bson.M{"mobile": n.Mobile}, new)
-	}
+
+	return collection
 }

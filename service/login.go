@@ -42,7 +42,7 @@ func Login(c *gin.Context) (int, models.User) {
 			} else if loginParam.OperateType == 2 {
 				//
 				var d mongo.SmsMongoInfo
-				mongo.NewMgo("sms_code").GetOne(bson.M{"mobile": "15122801645"}, &d)
+				mongo.NewMgo("sms_code").GetOne(bson.M{"mobile": user.Mobile}, &d)
 
 				log.Printf("d is:%v", d)
 			}
