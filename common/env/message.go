@@ -24,4 +24,10 @@ var MsgFlags = map[int]string{
 	DB_INSERT_ERROR: "数据插入错误",
 
 	ACCOUNT_ERROR: "账号或密码错误",
+
+	CODE_EXPIRED:     "验证码已失效",
+	CODE_INVALID:     "验证码无效",
+	CODE_KEY_INVALID: "验证码Key无效",
+
+	DATABASE_OPERATE_ERROR: "数据库操作失败",
 }

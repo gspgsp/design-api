@@ -40,10 +40,12 @@ func (sms *SmsService) SendSmsCode(phone string) (string, error) {
 
 	var d mongo.SmsMongoInfo
 	mgo.GetOne(bson.M{"mobile": phone}, &d)
+	expireAt := time.Now().Unix() + 120
+
 	if len(d.Mobile) > 0 {
-		mongo.NewMgo("sms_code").GetCollection().UpdateOne(context.Background(), bson.M{"mobile": phone}, bson.M{"$set": bson.M{"code": code, "codeKey": codeKey}})
+		mongo.NewMgo("sms_code").GetCollection().UpdateOne(context.Background(), bson.M{"mobile": phone}, bson.M{"$set": bson.M{"code": code, "codeKey": codeKey, "expireAt":expireAt}})
 	} else {
-		mgo.InsertOne(bson.D{{"mobile", phone}, {"code", code}, {"codeKey", codeKey}})
+		mgo.InsertOne(bson.D{{"mobile", phone}, {"code", code}, {"codeKey", codeKey}, {"expireAt", expireAt}})
 	}
 
 	return codeKey, nil

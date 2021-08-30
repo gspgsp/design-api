@@ -15,10 +15,11 @@ type mgo struct {
 }
 
 type SmsMongoInfo struct {
-	Id      primitive.ObjectID `bson:"_id"`
-	Mobile  string
-	Code    string
-	CodeKey string
+	Id       primitive.ObjectID `bson:"_id"`
+	Mobile   string
+	Code     string
+	CodeKey  string
+	ExpireAt int64
 }
 
 // NewMgo /**
