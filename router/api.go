@@ -23,8 +23,9 @@ func InitRouter(r *gin.Engine) {
 		//公共路由
 		groupCommon := groupV1.Group("common")
 		{
-			groupCommon.POST("sms", common.SendSms)   //发短信
-			groupCommon.POST("upload", common.Upload) //上传token
+			groupCommon.POST("sms", common.SendSms)    //发短信
+			groupCommon.POST("upload", common.Upload)  //上传token
+			groupCommon.GET("captcha", common.Captcha) //生成图形验证码
 		}
 
 		//用户登录注册路由
