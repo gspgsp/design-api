@@ -2,7 +2,9 @@ package service
 
 import (
 	"bytes"
+	"design-api/common"
 	"design-api/common/captcha"
+	"design-api/util"
 	"encoding/base64"
 	"github.com/fogleman/gg"
 	"github.com/golang/freetype/truetype"
@@ -14,13 +16,13 @@ import (
 // 随机图片配置
 const (
 	StrLen    = 4
-	ImgWidth  = 100
-	ImgHeight = 40
+	ImgWidth  = 180
+	ImgHeight = 70
 	RandChars = "ABCDEFGHIJKMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789"
 )
 
 // GetCaptcha 获取随机图片
-func GetCaptcha() string {
+func GetCaptcha() (string, string) {
 	str := GetRandStr(StrLen)
 	b := ImgText(ImgWidth, ImgHeight, str)
 
@@ -28,7 +30,10 @@ func GetCaptcha() string {
 	//ioutil.WriteFile("./output.jpg", b, 0666)   //buffer输出到jpg文件中（不做处理，直接写到文件，这里b是已经处理为buffer的，写到jpg文件）
 
 	base64Str := "data:image/png;base64," + base64.StdEncoding.EncodeToString(b)
-	return base64Str
+	captchaKey := "captcha-" + new(util.RandStr).Generate(8)
+	common.Cache.Set(captchaKey, str, 2*time.Minute)
+
+	return captchaKey, base64Str
 }
 
 // GetRandStr 生成随机字符串

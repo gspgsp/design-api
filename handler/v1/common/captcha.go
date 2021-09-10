@@ -4,10 +4,15 @@ import (
 	"design-api/common"
 	"design-api/service"
 	"github.com/gin-gonic/gin"
+	"log"
 )
 
 // Captcha 获取随机图片
 func Captcha(c *gin.Context) {
-	base64Str := service.GetCaptcha()
-	common.Format(c).SetData(map[string]interface{}{"captcha": base64Str}).JsonResponse()
+	captchaKey, base64Str := service.GetCaptcha()
+
+	s, _ := common.Cache.Get(captchaKey)
+	log.Printf("s is:%s", s)
+
+	common.Format(c).SetData(map[string]interface{}{"captcha_key": captchaKey, "captcha_code": base64Str}).JsonResponse()
 }
