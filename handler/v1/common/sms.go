@@ -7,6 +7,7 @@ import (
 	"design-api/validator/auth"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
+	"strings"
 )
 
 //验证码长度
@@ -43,7 +44,8 @@ func SendSms(c *gin.Context) {
 				if captchaKey, ok := m["captcha_key"]; ok {
 					s, _ := common.Cache.Get(captchaKey)
 					if captchaCode, ok := m["captcha_code"]; ok {
-						if captchaCode == s {
+						sCode, _ := s.(string)
+						if strings.ToLower(captchaCode) == strings.ToLower(sCode) {
 							//TODO::send
 							codeKey, statusCode = sendSms(mobile)
 						} else {
