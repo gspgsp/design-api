@@ -4,8 +4,8 @@ import (
 	"design-api/common"
 	"design-api/common/env"
 	"design-api/service"
+	"design-api/util"
 	"design-api/validator/auth"
-	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"strings"
 )
@@ -19,10 +19,7 @@ var (
 
 // SendSms /** 发送短信验证码
 func SendSms(c *gin.Context) {
-	param, _ := c.GetRawData()
-	var m map[string]string
-	_ = json.Unmarshal(param, &m)
-
+	m := util.JsonParamParse(c)
 	sendType, ok := m["send_type"]
 	if !ok {
 		common.Format(c).SetStatus(env.ERROR).SetCode(env.PARAM_REQUIRED).SetMessage(env.MsgFlags[env.PARAM_REQUIRED]).JsonResponse()
