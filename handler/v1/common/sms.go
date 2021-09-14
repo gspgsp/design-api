@@ -58,6 +58,9 @@ func SendSms(c *gin.Context) {
 					common.Format(c).SetStatus(env.ERROR).SetCode(env.PARAM_REQUIRED).SetMessage(env.MsgFlags[env.PARAM_REQUIRED]).JsonResponse()
 					return
 				}
+			} else if forgetStep == "two" {
+				//TODO::send
+				codeKey, statusCode = sendSms(mobile)
 			} else {
 				common.Format(c).SetStatus(env.ERROR).SetCode(env.PARAM_REQUIRED).SetMessage(env.MsgFlags[env.PARAM_REQUIRED]).JsonResponse()
 				return
