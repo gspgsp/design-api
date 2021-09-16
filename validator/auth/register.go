@@ -5,7 +5,7 @@ import (
 	"github.com/go-playground/validator"
 )
 
-//注册证参数
+// RegisterParam 注册证参数
 type RegisterParam struct {
 	SmsParam
 	CodeKey  string `validate:"required"`
@@ -13,27 +13,22 @@ type RegisterParam struct {
 	Password string `validate:"required,validateLength"`
 }
 
-/**
-解析POST参数
-*/
-func (r *RegisterParam) ParseParam(params map[string][]string) {
-
+// ParseParam /**解析POST参数
+func (r *RegisterParam) ParseParam(params map[string]string) {
 	for i, val := range params {
 		if i == "mobile" {
-			r.Mobile = val[0]
+			r.Mobile = val
 		} else if i == "code_key" {
-			r.CodeKey = val[0]
+			r.CodeKey = val
 		} else if i == "code" {
-			r.Code = val[0]
+			r.Code = val
 		} else if i == "password" {
-			r.Password = val[0]
+			r.Password = val
 		}
 	}
 }
 
-/**
-验证POST参数
-*/
+// ValidateParam /**验证POST参数
 func (r *RegisterParam) ValidateParam() (int, interface{}) {
 	validate := validator.New()
 
@@ -47,9 +42,7 @@ func (r *RegisterParam) ValidateParam() (int, interface{}) {
 	return env.RESPONSE_SUCCESS, nil
 }
 
-/**
-自定义验证方法 | 验证字符串长度
-*/
+// ValidateLengthFunc /**自定义验证方法 | 验证字符串长度
 func ValidateLengthFunc(field validator.FieldLevel) bool {
 	codeLen := len(field.Field().String())
 	if codeLen < 6 || codeLen > 20 {

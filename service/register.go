@@ -14,12 +14,12 @@ import (
 	"time"
 )
 
+// Register /**注册服务
 func Register(c *gin.Context) (int, int64) {
-	c.Request.ParseForm()
-	values := c.Request.Form
 
+	m := util.JsonParamParse(c)
 	registerParam := &auth.RegisterParam{}
-	registerParam.ParseParam(values)
+	registerParam.ParseParam(m)
 
 	if code, _ := registerParam.ValidateParam(); code == env.RESPONSE_SUCCESS {
 

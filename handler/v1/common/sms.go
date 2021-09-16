@@ -32,7 +32,7 @@ func SendSms(c *gin.Context) {
 		return
 	}
 
-	if sendType == "login" {
+	if sendType == "login" || sendType == "register" {
 		//TODO::send
 		codeKey, statusCode = sendSms(mobile)
 	} else if sendType == "forget" {
